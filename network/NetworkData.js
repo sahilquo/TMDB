@@ -21,6 +21,7 @@ export const API_TV_AIRING_TODAY = '/tv/airing_today'
 export const API_TV_TOP_RATED = '/tv/top_rated'
 export const API_TV_POPULAR = '/tv/popular'
 export const API_TV_TRENDING = '/trending/tv/day'
+export const API_TV_GENRES = '/genre/tv/list'
 
 // Celebrities
 export const API_PERSON_POPULAR = '/person/popular'

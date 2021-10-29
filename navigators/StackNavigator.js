@@ -37,7 +37,7 @@ const TVShowsHomeStack = () => {
                 name={TV_SHOWS_HOME}
                 component={TVShowsHome}
                 options={{
-                    title: 'TV Shows'
+                    title: 'Tv Shows'
                 }} />
         </Stack.Navigator>
     );

@@ -50,7 +50,7 @@ const TabNavigator = () => {
                 name={TV_SHOWS_HOME_STACK}
                 component={TVShowsHomeStack}
                 options={{
-                    title: 'TV Shows'
+                    title: 'Tv Shows'
                 }} />
 
             <Tab.Screen
