@@ -4,40 +4,44 @@ import { colorGrey, colorImageBorder } from '../utils/colors';
 import FastImage from 'react-native-fast-image';
 import { IMAGE_BASE_URL } from '../network/NetworkData';
 
-const HorizontalItem = ({ imageUrl, title, description }) => {
+const SmallBlockItem = ({ imageUrl, title, description }) => {
     return (
         <View style={styles.container}>
             <FastImage
                 style={styles.image}
                 source={{ uri: IMAGE_BASE_URL + imageUrl }} />
-            <Text style={styles.title} numberOfLines={1}>{title}</Text>
-            <Text style={styles.description} numberOfLines={1}>{description}</Text>
+            <View style={styles.textContainer}>
+                <Text style={styles.title} numberOfLines={1}>{title}</Text>
+                <Text style={styles.description} numberOfLines={1}>{description}</Text>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
+        flexDirection: 'row',
         paddingHorizontal: 12,
-        width: 240,
+        alignItems: 'center'
     },
     image: {
-        width: '100%',
-        height: 130,
+        width: 40,
+        height: 40,
         borderWidth: 0.5,
         borderColor: colorImageBorder,
     },
+    textContainer: {
+        marginStart: 8
+    },
     title: {
-        fontSize: 15,
+        fontSize: 13,
         color: 'white',
         fontWeight: 'bold',
-        marginTop: 8,
     },
     description: {
-        fontSize: 13,
+        fontSize: 12,
         color: colorGrey,
-        marginBottom: 8
     }
 });
 
-export default HorizontalItem;
+export default SmallBlockItem;
