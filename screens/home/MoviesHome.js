@@ -1,11 +1,17 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native';
+import HorizontalItem from '../../components/HorizontalItem';
+import SectionHeader from '../../components/SectionHeader';
+import VerticalItem from '../../components/VerticalItem';
 import { globalStyles } from '../../utils/globalStyles';
 
 const MoviesHome = () => {
     return (
         <View style={[globalStyles.container, styles.container]}>
-            <Text>Movies Home</Text>
+
+            <SectionHeader />
+            <VerticalItem />
+            <HorizontalItem />
         </View>
     );
 }
