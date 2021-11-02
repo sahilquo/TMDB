@@ -197,7 +197,7 @@ const InformationComponent = ({ movieDetail }) => {
     const informationStyles = StyleSheet.create({
         container: {
             flexDirection: 'row',
-            marginTop: 4,
+            marginTop: 2,
         },
         header: {
             color: 'white',

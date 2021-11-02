@@ -111,6 +111,7 @@ const TVShowsHome = ({ navigation }) => {
 const getHorizontalRenderItem = (item, genre, onTvShowClick) => {
     const genreNamesList = genre.filter(it => item['genre_ids'].includes(it.id)).map(it => it.name).join(", ")
     return <HorizontalItem
+        id={item.id}
         imageUrl={item['backdrop_path']}
         title={item['name']}
         description={genreNamesList}
@@ -122,6 +123,7 @@ const getHorizontalRenderItem = (item, genre, onTvShowClick) => {
 const getVerticalRenderItem = (item, genre, onTvShowClick) => {
     const genreNamesList = genre.filter(it => item['genre_ids'].includes(it.id)).map(it => it.name).join(", ")
     return <VerticalItem
+        id={item.id}
         imageUrl={item['poster_path']}
         title={item['name']}
         description={genreNamesList}

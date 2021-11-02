@@ -77,7 +77,7 @@ const TVShowDetail = ({ route, navigation }) => {
                         genres={tvShowDetail['genres']} />
                     <CastListComponent casts={tvShowDetail.credits.cast} />
                     <VideosComponent videos={tvShowDetail.videos.results} />
-                    {/* <InformationComponent tvShowDetail={tvShowDetail} /> */}
+                    <InformationComponent tvShowDetail={tvShowDetail} />
                     <Divider />
                     <RecommendedComponent
                         genre={genre}
@@ -95,7 +95,7 @@ const TVShowDetail = ({ route, navigation }) => {
 
 const updateParams = (navigation, tvShowDetail) => {
     if (tvShowDetail !== null) {
-        navigation.setOptions({ title: tvShowDetail['title'] })
+        navigation.setOptions({ title: tvShowDetail['name'] })
     }
 }
 
@@ -159,7 +159,7 @@ const SeasonsComponent = ({ seasons }) => {
                     onPress={() => {
                         // TODO: Navigate to Seasons List Page
                     }}>
-                    <View style={{ marginHorizontal: 8 }}>
+                    <View>
                         <SectionHeader
                             title='Seasons'
                             showAll={() => { }} />
@@ -195,7 +195,7 @@ const InformationComponent = ({ tvShowDetail }) => {
     const informationStyles = StyleSheet.create({
         container: {
             flexDirection: 'row',
-            marginTop: 4,
+            marginTop: 2,
         },
         header: {
             color: 'white',
@@ -219,16 +219,27 @@ const InformationComponent = ({ tvShowDetail }) => {
         }
     });
     const languageNames = tvShowDetail['spoken_languages'].map(it => it['english_name']).join(", ");
+    const countryNames = tvShowDetail['origin_country'].join(", ");
+    const networkNames = tvShowDetail['networks'].map(it => it['name']).join("\n");
     const productionCompaniesNames = tvShowDetail['production_companies'].map(it => it['name']).join("\n");
+    const createdByNames = tvShowDetail['created_by'].map(it => it['name']).join("\n");
 
     return (
         <View style={{ marginHorizontal: 8 }}>
             <Text style={informationStyles.header}>Information</Text>
             {
-                tvShowDetail['release_date'] !== null
+                tvShowDetail['created_by'] !== null && tvShowDetail['created_by'].length > 0
                     ? <View style={informationStyles.container}>
-                        <Text style={informationStyles.title}>Release Date</Text>
-                        <Text style={informationStyles.detail}>{formatDate(tvShowDetail['release_date'])}</Text>
+                        <Text style={informationStyles.title}>Created by</Text>
+                        <Text style={informationStyles.detail}>{createdByNames}</Text>
+                    </View>
+                    : null
+            }
+            {
+                tvShowDetail['first_air_date'] !== null
+                    ? <View style={informationStyles.container}>
+                        <Text style={informationStyles.title}>First Air Date</Text>
+                        <Text style={informationStyles.detail}>{formatDate(tvShowDetail['first_air_date'])}</Text>
                     </View>
                     : null
             }
@@ -241,18 +252,18 @@ const InformationComponent = ({ tvShowDetail }) => {
                     : null
             }
             {
-                tvShowDetail['budget'] !== null && tvShowDetail['budget'] > 0
+                tvShowDetail['origin_country'] !== null && tvShowDetail['origin_country'].length > 0
                     ? <View style={informationStyles.container}>
-                        <Text style={informationStyles.title}>Budget</Text>
-                        <Text style={informationStyles.detail}>{convertCurrency(tvShowDetail['budget'])}</Text>
+                        <Text style={informationStyles.title}>Country of Origin</Text>
+                        <Text style={informationStyles.detail}>{countryNames}</Text>
                     </View>
                     : null
             }
             {
-                tvShowDetail['revenue'] !== null && tvShowDetail['revenue'] > 0
+                tvShowDetail['networks'] !== null && tvShowDetail['networks'].length > 0
                     ? <View style={informationStyles.container}>
-                        <Text style={informationStyles.title}>Revenue</Text>
-                        <Text style={informationStyles.detail}>{convertCurrency(tvShowDetail['revenue'])}</Text>
+                        <Text style={informationStyles.title}>Networks</Text>
+                        <Text style={informationStyles.detail}>{networkNames}</Text>
                     </View>
                     : null
             }
@@ -415,7 +426,7 @@ const getVerticalRenderItem = (item, genre, onTVShowClick) => {
     return <VerticalItem
         id={item.id}
         imageUrl={item['poster_path']}
-        title={item['title']}
+        title={item['name']}
         description={genreNamesList}
         onClick={(id) => {
             onTVShowClick(id)
