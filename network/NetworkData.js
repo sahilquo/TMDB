@@ -2,11 +2,9 @@
 export const BASE_URL = 'https://api.themoviedb.org/3'
 export const API_KEY = '5ba0469fcc904ef9a53d713966d583c1'
 export const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/original/'
+export const YOUTUBE_THUBNAIL_BASE_URL = 'https://i.ytimg.com/vi'
+//https://i.ytimg.com/vi/A47y6VJNols/mqdefault.jpg
 
-
-// /trending/{media_type}/{time_window}
-//  media_type = movie/tv/person/all
-//  time_window = day/week
 
 // Movies
 export const API_MOVIES_POPULAR = '/movie/popular'
@@ -16,6 +14,12 @@ export const API_MOVIES_UPCOMING = '/movie/upcoming'
 export const API_MOVIES_GENRES = '/genre/movie/list'
 export const API_MOVIES_TRENDING = '/trending/movie/day'
 
+export const API_MOVIE_DETAIL = '/movie/{movie_id}'
+export const API_MOVIE_RECOMMENDATIONS = '/movie/{movie_id}/recommendations'
+export const API_MOVIE_SIMILAR = '/movie/{movie_id}/similar'
+export const API_MOVIE_VIDEOS = '/movie/{movie_id}/videos'
+export const API_MOVIE_CREDITS = '/movie/{movie_id}/credits'
+
 // TV
 export const API_TV_AIRING_TODAY = '/tv/airing_today'
 export const API_TV_TOP_RATED = '/tv/top_rated'
@@ -23,6 +27,22 @@ export const API_TV_POPULAR = '/tv/popular'
 export const API_TV_TRENDING = '/trending/tv/day'
 export const API_TV_GENRES = '/genre/tv/list'
 
+export const API_TV_DETAIL = '/tv/{tv_id}'
+export const API_TV_RECOMMENDATIONS = '/tv/{tv_id}/recommendations'
+export const API_TV_SIMILAR = '/tv/{tv_id}/similar'
+export const API_TV_VIDEOS = '/tv/{tv_id}/videos'
+export const API_TV_CREDITS = '/tv/{tv_id}/credits'
+
 // Celebrities
 export const API_PERSON_POPULAR = '/person/popular'
 export const API_PERSON_TRENDING = '/trending/person/day'
+
+export const VAR_MOVIE_ID = '{movie_id}'
+export const VAR_TV_ID = '{tv_id}'
+
+export const PARAM_LANGUAGE = 'language'
+export const PARAM_APPEND_TO_RESPONSE = 'append_to_response'
+
+export const PARAM_LANGUAGE_VALUE = 'en-US'
+export const PARAM_MOVIES_ATR_VALUE = 'credits,videos,recommendations,similar'
+export const PARAM_TV_ATR_VALUE = 'credits,videos,recommendations,similar'

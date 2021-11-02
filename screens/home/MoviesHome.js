@@ -4,12 +4,14 @@ import HorizontalItem from '../../components/HorizontalItem';
 import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import { globalStyles } from '../../utils/globalStyles';
-import { GET_ALL } from '../../network/Api';
+import { createUrl, GET_ALL } from '../../network/Api';
 import { API_MOVIES_GENRES, API_MOVIES_POPULAR, API_MOVIES_NOW_PLAYING, API_MOVIES_TRENDING, API_MOVIES_UPCOMING, API_MOVIES_TOP_RATED } from '../../network/NetworkData';
 import { ActivityIndicator } from 'react-native-paper';
 import { colorAccent } from '../../utils/colors';
+import { MOVIE_DETAIL } from '../../navigators/NavigatorNames';
 
-const MoviesHome = () => {
+
+const MoviesHome = ({ navigation }) => {
     const [isLoading, setLoading] = useState(true);
     const [genre, setGenre] = useState([]);
     const [popular, setPopular] = useState([]);
@@ -21,12 +23,12 @@ const MoviesHome = () => {
     useEffect(() => {
         GET_ALL(
             [
-                API_MOVIES_GENRES,
-                API_MOVIES_POPULAR,
-                API_MOVIES_NOW_PLAYING,
-                API_MOVIES_TRENDING,
-                API_MOVIES_TOP_RATED,
-                API_MOVIES_UPCOMING
+                createUrl(API_MOVIES_GENRES),
+                createUrl(API_MOVIES_POPULAR),
+                createUrl(API_MOVIES_NOW_PLAYING),
+                createUrl(API_MOVIES_TRENDING),
+                createUrl(API_MOVIES_TOP_RATED),
+                createUrl(API_MOVIES_UPCOMING)
             ],
             (jsons) => {
                 setGenre(jsons[0].genres)
@@ -42,6 +44,12 @@ const MoviesHome = () => {
                 console.log(error);
             }
     }, []);
+
+    const onMovieClick = (id) => {
+        navigation.navigate(MOVIE_DETAIL, {
+            movieId: id
+        });
+    }
 
     if (isLoading) {
         return (
@@ -62,7 +70,7 @@ const MoviesHome = () => {
                         data={popular}
                         horizontal
                         keyExtractor={({ id }) => id}
-                        renderItem={({ item }) => getVerticalRenderItem(item, genre)}
+                        renderItem={({ item }) => getVerticalRenderItem(item, genre, onMovieClick)}
                     />
                     <SectionHeader
                         title='Playing In Theatres'
@@ -73,7 +81,7 @@ const MoviesHome = () => {
                         data={nowPlaying}
                         horizontal
                         keyExtractor={({ id }) => id}
-                        renderItem={({ item }) => getHorizontalRenderItem(item, genre)}
+                        renderItem={({ item }) => getHorizontalRenderItem(item, genre, onMovieClick)}
                     />
                     <SectionHeader
                         title='Trending'
@@ -84,7 +92,7 @@ const MoviesHome = () => {
                         data={trending}
                         horizontal
                         keyExtractor={({ id }) => id}
-                        renderItem={({ item }) => getVerticalRenderItem(item, genre)}
+                        renderItem={({ item }) => getVerticalRenderItem(item, genre, onMovieClick)}
                     />
                     <SectionHeader
                         title='Top Rated'
@@ -95,7 +103,7 @@ const MoviesHome = () => {
                         data={topRated}
                         horizontal
                         keyExtractor={({ id }) => id}
-                        renderItem={({ item }) => getHorizontalRenderItem(item, genre)}
+                        renderItem={({ item }) => getHorizontalRenderItem(item, genre, onMovieClick)}
                     />
                     <SectionHeader
                         title='Upcoming'
@@ -106,7 +114,7 @@ const MoviesHome = () => {
                         data={upcoming}
                         horizontal
                         keyExtractor={({ id }) => id}
-                        renderItem={({ item }) => getVerticalRenderItem(item, genre)}
+                        renderItem={({ item }) => getVerticalRenderItem(item, genre, onMovieClick)}
                     />
                 </View>
             </ScrollView>
@@ -115,14 +123,30 @@ const MoviesHome = () => {
     }
 }
 
-const getHorizontalRenderItem = (item, genre) => {
+const getHorizontalRenderItem = (item, genre, onMovieClick) => {
     const genreNamesList = genre.filter(it => item['genre_ids'].includes(it.id)).map(it => it.name).join(", ")
-    return <HorizontalItem imageUrl={item['backdrop_path']} title={item['title']} description={genreNamesList} />
+    return <HorizontalItem
+        id={item.id}
+        imageUrl={item['backdrop_path']}
+        title={item['title']}
+        description={genreNamesList}
+        onClick={(id) => {
+            onMovieClick(id)
+        }}
+    />
 }
 
-const getVerticalRenderItem = (item, genre) => {
+const getVerticalRenderItem = (item, genre, onMovieClick) => {
     const genreNamesList = genre.filter(it => item['genre_ids'].includes(it.id)).map(it => it.name).join(", ")
-    return <VerticalItem imageUrl={item['poster_path']} title={item['title']} description={genreNamesList} />
+    return <VerticalItem
+        id={item.id}
+        imageUrl={item['poster_path']}
+        title={item['title']}
+        description={genreNamesList}
+        onClick={(id) => {
+            onMovieClick(id)
+        }}
+    />
 }
 
 const styles = StyleSheet.create({

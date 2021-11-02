@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { colorGrey } from '../utils/colors';
 
-const SectionHeader = ({ title, showAll }) => {
+const SectionHeader = ({ title, hideShowAll, showAll }) => {
     return (
         <View style={styles.container}>
             <Text
@@ -12,12 +12,15 @@ const SectionHeader = ({ title, showAll }) => {
             >
                 {title}
             </Text>
-            <TouchableOpacity
-                style={styles.seeAll}
-                onPress={showAll()}>
-                <Text style={{ fontSize: 13, color: colorGrey }}>See all</Text>
-                <Icon name='keyboard-arrow-right' size={20} color={colorGrey} />
-            </TouchableOpacity>
+            {hideShowAll ? null :
+                <TouchableOpacity
+                    style={styles.seeAll}
+                    onPress={showAll()}>
+                    <Text style={{ fontSize: 13, color: colorGrey }}>See all</Text>
+                    <Icon name='keyboard-arrow-right' size={20} color={colorGrey} />
+                </TouchableOpacity>
+            }
+
         </View>
     );
 }

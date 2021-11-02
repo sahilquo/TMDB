@@ -1,20 +1,22 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { IMAGE_BASE_URL } from '../network/NetworkData';
 import { colorGrey, colorImageBorder } from '../utils/colors';
 
-const VerticalItem = ({ imageUrl, title, description }) => {
+const VerticalItem = ({ id, imageUrl, title, description, onClick }) => {
     return (
-        <View style={styles.container}>
-            <View style={styles.imageContainer}>
-                <FastImage
-                    style={styles.image}
-                    source={{ uri: IMAGE_BASE_URL + imageUrl }} />
+        <TouchableWithoutFeedback onPress={() => onClick(id)}>
+            <View style={styles.container}>
+                <View style={styles.imageContainer}>
+                    <FastImage
+                        style={styles.image}
+                        source={{ uri: IMAGE_BASE_URL + imageUrl }} />
+                </View>
+                <Text style={styles.title} numberOfLines={2}>{title}</Text>
+                <Text style={styles.description} numberOfLines={1}>{description}</Text>
             </View>
-            <Text style={styles.title} numberOfLines={2}>{title}</Text>
-            <Text style={styles.description} numberOfLines={1}>{description}</Text>
-        </View>
+        </TouchableWithoutFeedback>
     );
 }
 
