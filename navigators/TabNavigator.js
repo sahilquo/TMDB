@@ -53,12 +53,12 @@ const TabNavigator = () => {
                     title: 'Tv Shows'
                 }} />
 
-            {/* <Tab.Screen
+            <Tab.Screen
                 name={CELEBRITIES_HOME_STACK}
                 component={CelebritiesHomeStack}
                 options={{
                     title: 'Celebrities'
-                }} /> */}
+                }} />
         </Tab.Navigator>
     );
 }
