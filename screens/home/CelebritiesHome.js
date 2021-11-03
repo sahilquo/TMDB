@@ -8,11 +8,11 @@ import { createUrl, GET_ALL } from '../../network/Api';
 import { API_MOVIES_GENRES, API_MOVIES_POPULAR, API_MOVIES_NOW_PLAYING, API_MOVIES_TRENDING, API_MOVIES_UPCOMING, API_MOVIES_TOP_RATED, API_PERSON_POPULAR, API_PERSON_TRENDING } from '../../network/NetworkData';
 import { ActivityIndicator } from 'react-native-paper';
 import { colorAccent } from '../../utils/colors';
-import { MOVIE_DETAIL } from '../../navigators/NavigatorNames';
+import { MOVIE_DETAIL, PERSON_DETAIL } from '../../navigators/NavigatorNames';
 import PersonVerticalItem from '../person/PersonVerticalItem';
 import PersonHorizontalItem from '../person/PersonHorizontaltem';
 
-const CelebritiesHome = () => {
+const CelebritiesHome = ({ navigation }) => {
     const [isLoading, setLoading] = useState(true);
     const [popular, setPopular] = useState([]);
     const [trending, setTrending] = useState([]);
@@ -35,9 +35,9 @@ const CelebritiesHome = () => {
     }, []);
 
     const onPersonClick = (id) => {
-        // navigation.navigate(MOVIE_DETAIL, {
-        //     movieId: id
-        // });
+        navigation.navigate(PERSON_DETAIL, {
+            personId: id
+        });
     }
 
     if (isLoading) {

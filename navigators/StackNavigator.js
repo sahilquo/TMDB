@@ -4,9 +4,10 @@ import CelebritiesHome from '../screens/home/CelebritiesHome';
 import MoviesHome from '../screens/home/MoviesHome';
 import TVShowsHome from '../screens/home/TVShowsHome';
 import MovieDetail from '../screens/movies/MovieDetail';
+import PersonDetail from '../screens/person/PersonDetail';
 import TVShowDetail from '../screens/tv/TVShowDetail';
 import { colorPrimaryDark } from '../utils/colors';
-import { CELEBRITIES_HOME, MOVIES_HOME, MOVIE_DETAIL, TV_SHOWS_HOME, TV_SHOW_DETAIL } from './NavigatorNames';
+import { CELEBRITIES_HOME, MOVIES_HOME, MOVIE_DETAIL, PERSON_DETAIL, TV_SHOWS_HOME, TV_SHOW_DETAIL } from './NavigatorNames';
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +68,12 @@ const CelebritiesHomeStack = () => {
                 component={CelebritiesHome}
                 options={{
                     title: 'Celebrities'
+                }} />
+            <Stack.Screen
+                name={PERSON_DETAIL}
+                component={PersonDetail}
+                options={{
+                    title: ''
                 }} />
         </Stack.Navigator>
     );

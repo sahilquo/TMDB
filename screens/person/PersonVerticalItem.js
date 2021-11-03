@@ -11,7 +11,7 @@ const PersonVerticalItem = ({ id, imageUrl, title, description, onClick }) => {
             <View style={styles.container}>
                 <View style={styles.imageContainer}>
                     <Icon
-                        name='image'
+                        name='person'
                         color='#B5B5B5'
                         size={44}
                         style={[styles.image, {
