@@ -7,7 +7,8 @@ import MovieDetail from '../screens/movies/MovieDetail';
 import PersonDetail from '../screens/person/PersonDetail';
 import TVShowDetail from '../screens/tv/TVShowDetail';
 import { colorPrimaryDark } from '../utils/colors';
-import { CELEBRITIES_HOME, MOVIES_HOME, MOVIE_DETAIL, PERSON_DETAIL, TV_SHOWS_HOME, TV_SHOW_DETAIL } from './NavigatorNames';
+import { ALL_SCREENS, CELEBRITIES_HOME, MOVIES_HOME, MOVIE_DETAIL, PERSON_DETAIL, TAB_STACK, TV_SHOWS_HOME, TV_SHOW_DETAIL } from './NavigatorNames';
+import TabNavigator from './TabNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,51 @@ const screenOptions = {
         backgroundColor: colorPrimaryDark
     }
 };
+
+const MainStack = () => {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false
+            }}>
+            <Stack.Screen
+                name={TAB_STACK}
+                component={TabNavigator}
+            />
+            <Stack.Screen
+                name={ALL_SCREENS}
+                component={AllStack}
+            />
+        </Stack.Navigator>
+    );
+}
+
+const AllStack = () => {
+    return (
+        <Stack.Navigator
+            screenOptions={screenOptions}>
+            <Stack.Screen
+                name={MOVIE_DETAIL}
+                component={MovieDetail}
+                options={{
+                    title: ''
+                }}
+            />
+            <Stack.Screen
+                name={TV_SHOW_DETAIL}
+                component={TVShowDetail}
+                options={{
+                    title: ''
+                }} />
+            <Stack.Screen
+                name={PERSON_DETAIL}
+                component={PersonDetail}
+                options={{
+                    title: ''
+                }} />
+        </Stack.Navigator>
+    );
+}
 
 const MoviesHomeStack = () => {
     return (
@@ -28,13 +74,13 @@ const MoviesHomeStack = () => {
                 options={{
                     title: 'Movies'
                 }} />
-            <Stack.Screen
+            {/* <Stack.Screen
                 name={MOVIE_DETAIL}
                 component={MovieDetail}
                 options={{
                     title: ''
                 }}
-            />
+            /> */}
         </Stack.Navigator>
     );
 };
@@ -49,12 +95,12 @@ const TVShowsHomeStack = () => {
                 options={{
                     title: 'Tv Shows'
                 }} />
-            <Stack.Screen
+            {/* <Stack.Screen
                 name={TV_SHOW_DETAIL}
                 component={TVShowDetail}
                 options={{
                     title: ''
-                }} />
+                }} /> */}
         </Stack.Navigator>
     );
 };
@@ -69,14 +115,14 @@ const CelebritiesHomeStack = () => {
                 options={{
                     title: 'Celebrities'
                 }} />
-            <Stack.Screen
+            {/* <Stack.Screen
                 name={PERSON_DETAIL}
                 component={PersonDetail}
                 options={{
                     title: ''
-                }} />
+                }} /> */}
         </Stack.Navigator>
     );
 };
 
-export { MoviesHomeStack, TVShowsHomeStack, CelebritiesHomeStack };
+export { MainStack, AllStack, MoviesHomeStack, TVShowsHomeStack, CelebritiesHomeStack };

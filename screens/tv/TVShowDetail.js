@@ -8,7 +8,7 @@ import RoundedImage from '../../components/RoundedImage';
 import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import VideoTileItem from '../../components/VideoTileItem';
-import { TV_SHOW_DETAIL } from '../../navigators/NavigatorNames';
+import { PERSON_DETAIL, TV_SHOW_DETAIL } from '../../navigators/NavigatorNames';
 import { createUrl, GET_ALL } from '../../network/Api';
 import { API_TV_DETAIL, API_TV_GENRES, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_TV_ATR_VALUE, VAR_TV_ID } from '../../network/NetworkData';
 import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorImageBorder, colorPrimary } from '../../utils/colors';
@@ -53,6 +53,18 @@ const TVShowDetail = ({ route, navigation }) => {
         });
     }
 
+    const onSeasonDetailClick = (id) => {
+        // navigation.push(TV_SHOW_DETAIL, {
+        //     tvId: id
+        // });
+    }
+
+    const onPersonClick = (id) => {
+        navigation.push(PERSON_DETAIL, {
+            personId: id
+        });
+    }
+
     if (isLoading || tvShowDetail === null) {
         return (
             <View style={[globalStyles.container, styles.container]}>
@@ -74,8 +86,11 @@ const TVShowDetail = ({ route, navigation }) => {
                     <Divider />
                     <SeasonsComponent
                         seasons={tvShowDetail.seasons}
-                        genres={tvShowDetail['genres']} />
-                    <CastListComponent casts={tvShowDetail.credits.cast} />
+                        genres={tvShowDetail['genres']}
+                        onSeasonDetailClick={onSeasonDetailClick} />
+                    <CastListComponent
+                        casts={tvShowDetail.credits.cast}
+                        onPersonClick={onPersonClick} />
                     <VideosComponent videos={tvShowDetail.videos.results} />
                     <InformationComponent tvShowDetail={tvShowDetail} />
                     <Divider />
@@ -151,38 +166,33 @@ const BasicDetailComponent = ({ tvShowDetail }) => {
     );
 }
 
-const SeasonsComponent = ({ seasons }) => {
+const SeasonsComponent = ({ seasons, onSeasonDetailClick }) => {
     if (seasons != null && seasons.length > 0) {
         return (
             <View>
-                <TouchableWithoutFeedback
-                    onPress={() => {
-                        // TODO: Navigate to Seasons List Page
-                    }}>
-                    <View>
-                        <SectionHeader
-                            title='Seasons'
-                            showAll={() => { }} />
-                        <FlatList
-                            style={{ flexGrow: 0, marginTop: 4 }}
-                            showsHorizontalScrollIndicator={false}
-                            data={seasons}
-                            horizontal
-                            keyExtractor={({ id }) => id}
-                            renderItem={({ item }) => {
-                                return (
-                                    <VerticalItem
-                                        id={item.id}
-                                        imageUrl={item['poster_path']}
-                                        title={item['name']}
-                                        onClick={(id) => {
-                                            onTVShowClick(id)
-                                        }}
-                                    />);
-                            }}
-                        />
-                    </View>
-                </TouchableWithoutFeedback>
+                <View>
+                    <SectionHeader
+                        title='Seasons'
+                        showAll={() => { }} />
+                    <FlatList
+                        style={{ flexGrow: 0, marginTop: 4 }}
+                        showsHorizontalScrollIndicator={false}
+                        data={seasons}
+                        horizontal
+                        keyExtractor={({ id }) => id}
+                        renderItem={({ item }) => {
+                            return (
+                                <VerticalItem
+                                    id={item.id}
+                                    imageUrl={item['poster_path']}
+                                    title={item['name']}
+                                    onClick={(id) => {
+                                        onSeasonDetailClick(id)
+                                    }}
+                                />);
+                        }}
+                    />
+                </View>
                 <Divider />
             </View>
         );
@@ -279,7 +289,7 @@ const InformationComponent = ({ tvShowDetail }) => {
     );
 }
 
-const CastListComponent = ({ casts }) => {
+const CastListComponent = ({ casts, onPersonClick }) => {
     if (casts.length > 0) {
         return (
             <View>
@@ -292,7 +302,7 @@ const CastListComponent = ({ casts }) => {
                     data={casts.slice(0, 15)}
                     horizontal
                     keyExtractor={({ id }) => id}
-                    renderItem={({ item }) => <CastComponent item={item} onClick={() => { }} />}
+                    renderItem={({ item }) => <CastComponent item={item} onPersonClick={onPersonClick} />}
                 />
                 <Divider />
             </View>
@@ -302,7 +312,7 @@ const CastListComponent = ({ casts }) => {
     }
 }
 
-const CastComponent = ({ item, onClick }) => {
+const CastComponent = ({ item, onPersonClick }) => {
     const size = 90;
     const castStyles = StyleSheet.create({
         container: {
@@ -328,7 +338,7 @@ const CastComponent = ({ item, onClick }) => {
     return (
         <TouchableWithoutFeedback
             onPress={() => {
-                onClick(item.id);
+                onPersonClick(item.id);
             }}>
             <View style={castStyles.container}>
                 <RoundedImage imageUrl={IMAGE_BASE_URL + item['profile_path']} size={size} />

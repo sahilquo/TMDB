@@ -8,7 +8,7 @@ import { createUrl, GET_ALL } from '../../network/Api';
 import { ActivityIndicator } from 'react-native-paper';
 import { colorAccent } from '../../utils/colors';
 import { API_TV_GENRES, API_TV_AIRING_TODAY, API_TV_TRENDING, API_TV_TOP_RATED, API_TV_POPULAR } from '../../network/NetworkData';
-import { TV_SHOW_DETAIL } from '../../navigators/NavigatorNames';
+import { ALL_SCREENS, TV_SHOW_DETAIL } from '../../navigators/NavigatorNames';
 
 const TVShowsHome = ({ navigation }) => {
     const [isLoading, setLoading] = useState(true);
@@ -43,9 +43,15 @@ const TVShowsHome = ({ navigation }) => {
     }, []);
 
     const onTvShowClick = (id) => {
-        navigation.navigate(TV_SHOW_DETAIL, {
-            tvId: id
-        });
+        navigation.push(ALL_SCREENS, {
+            screen: TV_SHOW_DETAIL,
+            params: {
+                tvId: id
+            }
+        })
+        // navigation.navigate(TV_SHOW_DETAIL, {
+        //     tvId: id
+        // });
     }
 
     if (isLoading) {

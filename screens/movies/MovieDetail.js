@@ -9,7 +9,7 @@ import RoundedImage from '../../components/RoundedImage';
 import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import VideoTileItem from '../../components/VideoTileItem';
-import { MOVIE_DETAIL } from '../../navigators/NavigatorNames';
+import { MOVIE_DETAIL, PERSON_DETAIL } from '../../navigators/NavigatorNames';
 import { createUrl, GET_ALL } from '../../network/Api';
 import { API_MOVIES_GENRES, API_MOVIE_DETAIL, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_MOVIES_ATR_VALUE, VAR_MOVIE_ID } from '../../network/NetworkData';
 import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorImageBorder, colorPrimary } from '../../utils/colors';
@@ -54,6 +54,12 @@ const MovieDetail = ({ route, navigation }) => {
         });
     }
 
+    const onPersonClick = (id) => {
+        navigation.push(PERSON_DETAIL, {
+            personId: id
+        });
+    }
+
     if (isLoading || movieDetail === null) {
         return (
             <View style={[globalStyles.container, styles.container]}>
@@ -76,7 +82,9 @@ const MovieDetail = ({ route, navigation }) => {
                     <CollectionComponent
                         collection={movieDetail['belongs_to_collection']}
                         genres={movieDetail['genres']} />
-                    <CastListComponent casts={movieDetail.credits.cast} />
+                    <CastListComponent
+                        casts={movieDetail.credits.cast}
+                        onPersonClick={onPersonClick} />
                     <VideosComponent videos={movieDetail.videos.results} />
                     <InformationComponent movieDetail={movieDetail} />
                     <Divider />
@@ -270,7 +278,7 @@ const InformationComponent = ({ movieDetail }) => {
     );
 }
 
-const CastListComponent = ({ casts }) => {
+const CastListComponent = ({ casts, onPersonClick }) => {
     if (casts.length > 0) {
         return (
             <View>
@@ -283,7 +291,7 @@ const CastListComponent = ({ casts }) => {
                     data={casts.slice(0, 15)}
                     horizontal
                     keyExtractor={({ id }) => id}
-                    renderItem={({ item }) => <CastComponent item={item} onClick={() => { }} />}
+                    renderItem={({ item }) => <CastComponent item={item} onPersonClick={onPersonClick} />}
                 />
                 <Divider />
             </View>
@@ -293,7 +301,7 @@ const CastListComponent = ({ casts }) => {
     }
 }
 
-const CastComponent = ({ item, onClick }) => {
+const CastComponent = ({ item, onPersonClick }) => {
     const size = 90;
     const castStyles = StyleSheet.create({
         container: {
@@ -319,7 +327,7 @@ const CastComponent = ({ item, onClick }) => {
     return (
         <TouchableWithoutFeedback
             onPress={() => {
-                onClick(item.id);
+                onPersonClick(item.id);
             }}>
             <View style={castStyles.container}>
                 <RoundedImage imageUrl={IMAGE_BASE_URL + item['profile_path']} size={size} />

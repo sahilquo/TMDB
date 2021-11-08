@@ -52,20 +52,14 @@ const PersonDetail = ({ route, navigation }) => {
     }, []);
 
     const onMovieClick = (id) => {
-        navigation.navigate(MOVIES_HOME_STACK, {
-            screen: MOVIE_DETAIL,
-            params: {
-                movieId: id
-            }
+        navigation.push(MOVIE_DETAIL, {
+            movieId: id
         });
     }
 
     const onTvShowClick = (id) => {
-        navigation.navigate(TV_SHOWS_HOME_STACK, {
-            screen: TV_SHOW_DETAIL,
-            params: {
-                tvId: id
-            }
+        navigation.push(TV_SHOW_DETAIL, {
+            tvId: id
         });
     }
 
