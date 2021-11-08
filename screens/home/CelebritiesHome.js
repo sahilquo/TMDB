@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
-import HorizontalItem from '../../components/HorizontalItem';
+import { View, StyleSheet, FlatList, ScrollView } from 'react-native';
 import SectionHeader from '../../components/SectionHeader';
-import VerticalItem from '../../components/VerticalItem';
 import { globalStyles } from '../../utils/globalStyles';
 import { createUrl, GET_ALL } from '../../network/Api';
-import { API_MOVIES_GENRES, API_MOVIES_POPULAR, API_MOVIES_NOW_PLAYING, API_MOVIES_TRENDING, API_MOVIES_UPCOMING, API_MOVIES_TOP_RATED, API_PERSON_POPULAR, API_PERSON_TRENDING } from '../../network/NetworkData';
+import { API_PERSON_POPULAR, API_PERSON_TRENDING, PARAM_REGION, PARAM_REGION_VALUE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE } from '../../network/NetworkData';
 import { ActivityIndicator } from 'react-native-paper';
 import { colorAccent } from '../../utils/colors';
-import { ALL_SCREENS, MOVIE_DETAIL, PERSON_DETAIL, PERSON_LIST } from '../../navigators/NavigatorNames';
+import { ALL_SCREENS, PERSON_DETAIL, PERSON_LIST } from '../../navigators/NavigatorNames';
 import PersonVerticalItem from '../person/PersonVerticalItem';
 import PersonHorizontalItem from '../person/PersonHorizontaltem';
 
@@ -18,10 +16,15 @@ const CelebritiesHome = ({ navigation }) => {
     const [trending, setTrending] = useState([]);
 
     useEffect(() => {
+        const params = {}
+        params[PARAM_LANGUAGE] = PARAM_LANGUAGE_VALUE;
+        params[PARAM_REGION] = PARAM_REGION_VALUE;
+        console.log(createUrl(API_PERSON_POPULAR, params))
+
         GET_ALL(
             [
-                createUrl(API_PERSON_POPULAR),
-                createUrl(API_PERSON_TRENDING)
+                createUrl(API_PERSON_POPULAR, params),
+                createUrl(API_PERSON_TRENDING, params)
             ],
             (jsons) => {
                 setPopular(jsons[0].results)

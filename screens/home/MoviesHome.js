@@ -5,7 +5,7 @@ import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import { globalStyles } from '../../utils/globalStyles';
 import { createUrl, GET_ALL } from '../../network/Api';
-import { API_MOVIES_GENRES, API_MOVIES_POPULAR, API_MOVIES_NOW_PLAYING, API_MOVIES_TRENDING, API_MOVIES_UPCOMING, API_MOVIES_TOP_RATED } from '../../network/NetworkData';
+import { API_MOVIES_GENRES, API_MOVIES_POPULAR, API_MOVIES_NOW_PLAYING, API_MOVIES_TRENDING, API_MOVIES_UPCOMING, API_MOVIES_TOP_RATED, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_REGION_VALUE, PARAM_REGION } from '../../network/NetworkData';
 import { ActivityIndicator } from 'react-native-paper';
 import { colorAccent } from '../../utils/colors';
 import { ALL_SCREENS, MOVIE_DETAIL, MOVIE_LIST } from '../../navigators/NavigatorNames';
@@ -21,14 +21,17 @@ const MoviesHome = ({ navigation }) => {
     const [upcoming, setUpcoming] = useState([]);
 
     useEffect(() => {
+        const params = {}
+        params[PARAM_LANGUAGE] = PARAM_LANGUAGE_VALUE;
+        params[PARAM_REGION] = PARAM_REGION_VALUE;
         GET_ALL(
             [
                 createUrl(API_MOVIES_GENRES),
-                createUrl(API_MOVIES_POPULAR),
-                createUrl(API_MOVIES_NOW_PLAYING),
-                createUrl(API_MOVIES_TRENDING),
-                createUrl(API_MOVIES_TOP_RATED),
-                createUrl(API_MOVIES_UPCOMING)
+                createUrl(API_MOVIES_POPULAR, params),
+                createUrl(API_MOVIES_NOW_PLAYING, params),
+                createUrl(API_MOVIES_TRENDING, params),
+                createUrl(API_MOVIES_TOP_RATED, params),
+                createUrl(API_MOVIES_UPCOMING, params)
             ],
             (jsons) => {
                 setGenre(jsons[0].genres)

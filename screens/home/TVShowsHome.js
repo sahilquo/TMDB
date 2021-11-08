@@ -7,7 +7,7 @@ import { globalStyles } from '../../utils/globalStyles';
 import { createUrl, GET_ALL } from '../../network/Api';
 import { ActivityIndicator } from 'react-native-paper';
 import { colorAccent } from '../../utils/colors';
-import { API_TV_GENRES, API_TV_AIRING_TODAY, API_TV_TRENDING, API_TV_TOP_RATED, API_TV_POPULAR } from '../../network/NetworkData';
+import { API_TV_GENRES, API_TV_AIRING_TODAY, API_TV_TRENDING, API_TV_TOP_RATED, API_TV_POPULAR, PARAM_REGION, PARAM_REGION_VALUE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE } from '../../network/NetworkData';
 import { ALL_SCREENS, TV_SHOW_DETAIL, TV_SHOW_LIST } from '../../navigators/NavigatorNames';
 
 const TVShowsHome = ({ navigation }) => {
@@ -19,17 +19,20 @@ const TVShowsHome = ({ navigation }) => {
     const [popular, setPopular] = useState([]);
 
     useEffect(() => {
+        const params = {}
+        params[PARAM_LANGUAGE] = PARAM_LANGUAGE_VALUE;
+        params[PARAM_REGION] = PARAM_REGION_VALUE;
+        console.log(createUrl(API_TV_AIRING_TODAY, params))
         GET_ALL(
             [
                 createUrl(API_TV_GENRES),
-                createUrl(API_TV_AIRING_TODAY),
-                createUrl(API_TV_TRENDING),
-                createUrl(API_TV_TOP_RATED),
-                createUrl(API_TV_POPULAR)
+                createUrl(API_TV_AIRING_TODAY, params),
+                createUrl(API_TV_TRENDING, params),
+                createUrl(API_TV_TOP_RATED, params),
+                createUrl(API_TV_POPULAR, params)
             ],
             (jsons) => {
                 setGenre(jsons[0].genres)
-                console.log(jsons[1].results)
                 setAiringToday(jsons[1].results);
                 setTrending(jsons[2].results);
                 setTopRated(jsons[3].results);

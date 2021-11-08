@@ -51,10 +51,12 @@ export const VAR_COLLECTION_ID = '{collection_id}'
 export const VAR_SEASON_NUMBER = '{season_number}'
 
 export const PARAM_LANGUAGE = 'language'
+export const PARAM_REGION = 'region'
 export const PARAM_APPEND_TO_RESPONSE = 'append_to_response'
 export const PARAM_PAGE = 'page'
 
-export const PARAM_LANGUAGE_VALUE = 'en-US'
+export const PARAM_LANGUAGE_VALUE = 'en-IN'
+export const PARAM_REGION_VALUE = 'IN'
 export const PARAM_MOVIES_ATR_VALUE = 'credits,videos,recommendations,similar'
 export const PARAM_TV_ATR_VALUE = 'credits,videos,recommendations,similar'
 export const PARAM_PERSON_ATR_VALUE = 'movie_credits,tv_credits'
