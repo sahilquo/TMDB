@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Text, FlatList, TouchableWithoutFeedback, Linking } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, FlatList, LogBox } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import { ActivityIndicator } from 'react-native-paper';
-import { StarRatingDisplay } from 'react-native-star-rating-widget';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import RoundedImage from '../../components/RoundedImage';
 import SectionHeader from '../../components/SectionHeader';
-import VerticalItem from '../../components/VerticalItem';
-import { MOVIE_DETAIL, PERSON_DETAIL } from '../../navigators/NavigatorNames';
+import { MOVIE_DETAIL } from '../../navigators/NavigatorNames';
 import { createUrl, GET_ALL } from '../../network/Api';
 import { API_MOVIES_GENRES, API_MOVIE_COLLECTION_DETAIL, IMAGE_BASE_URL, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, VAR_COLLECTION_ID } from '../../network/NetworkData';
-import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorImageBorder, colorPrimary } from '../../utils/colors';
+import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorPrimary } from '../../utils/colors';
 import { globalStyles } from '../../utils/globalStyles';
-import { convertCurrency, formatDate, roundNum } from '../../utils/ValueUtils';
+import MovieListItem from './MovieListItem';
 
 const MovieCollectionDetail = ({ route, navigation }) => {
     const { collectionId } = route.params;
@@ -27,6 +23,8 @@ const MovieCollectionDetail = ({ route, navigation }) => {
     }, [collectionDetail]);
 
     useEffect(() => {
+        LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+
         const params = {}
         params[PARAM_LANGUAGE] = PARAM_LANGUAGE_VALUE;
         console.log(createUrl(`${API_MOVIE_COLLECTION_DETAIL.replace(VAR_COLLECTION_ID, collectionId)}`, params))
@@ -113,9 +111,7 @@ const CollectionComponent = ({ genre, movies, onMovieClick }) => {
                     hideShowAll={true} />
                 <FlatList
                     style={{ flexGrow: 0, marginTop: 8 }}
-                    showsHorizontalScrollIndicator={false}
                     data={movies}
-                    horizontal
                     keyExtractor={({ id }) => id}
                     renderItem={({ item }) => getVerticalRenderItem(item, genre, onMovieClick)}
                 />
@@ -134,11 +130,19 @@ const Divider = () => {
 
 const getVerticalRenderItem = (item, genre, onMovieClick) => {
     const genreNamesList = genre.filter(it => item['genre_ids'].includes(it.id)).map(it => it.name).join(", ")
-    return <VerticalItem
-        id={item.id}
-        imageUrl={item['poster_path']}
-        title={item['title']}
-        description={genreNamesList}
+    // return <VerticalItem
+    //     id={item.id}
+    //     imageUrl={item['poster_path']}
+    //     title={item['title']}
+    //     description={genreNamesList}
+    //     onClick={(id) => {
+    //         onMovieClick(id)
+    //     }}
+    // />
+    return <MovieListItem
+        item={item}
+        title={item.title}
+        genreText={genreNamesList}
         onClick={(id) => {
             onMovieClick(id)
         }}
