@@ -9,7 +9,7 @@ import RoundedImage from '../../components/RoundedImage';
 import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import VideoTileItem from '../../components/VideoTileItem';
-import { MOVIE_DETAIL, PERSON_DETAIL } from '../../navigators/NavigatorNames';
+import { MOVIE_COLLECTION_DETAIL, MOVIE_DETAIL, PERSON_DETAIL } from '../../navigators/NavigatorNames';
 import { createUrl, GET_ALL } from '../../network/Api';
 import { API_MOVIES_GENRES, API_MOVIE_DETAIL, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_MOVIES_ATR_VALUE, VAR_MOVIE_ID } from '../../network/NetworkData';
 import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorImageBorder, colorPrimary } from '../../utils/colors';
@@ -54,6 +54,12 @@ const MovieDetail = ({ route, navigation }) => {
         });
     }
 
+    const onCollectionClick = (id) => {
+        navigation.push(MOVIE_COLLECTION_DETAIL, {
+            collectionId: id
+        });
+    }
+
     const onPersonClick = (id) => {
         navigation.push(PERSON_DETAIL, {
             personId: id
@@ -81,7 +87,8 @@ const MovieDetail = ({ route, navigation }) => {
                     <Divider />
                     <CollectionComponent
                         collection={movieDetail['belongs_to_collection']}
-                        genres={movieDetail['genres']} />
+                        genres={movieDetail['genres']}
+                        onCollectionClick={onCollectionClick} />
                     <CastListComponent
                         casts={movieDetail.credits.cast}
                         onPersonClick={onPersonClick} />
@@ -160,14 +167,14 @@ const BasicDetailComponent = ({ movieDetail }) => {
     );
 }
 
-const CollectionComponent = ({ collection, genres }) => {
+const CollectionComponent = ({ collection, genres, onCollectionClick }) => {
     if (collection != null) {
         const genresNames = genres.map(it => it.name).join(", ");
         return (
             <View>
                 <TouchableWithoutFeedback
                     onPress={() => {
-                        // TODO: Navigate to Collection Detail Page
+                        onCollectionClick(collection.id)
                     }}>
                     <View style={{ marginHorizontal: 8 }}>
                         <Text style={styles.title}>Collection</Text>

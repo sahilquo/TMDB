@@ -20,6 +20,8 @@ export const API_MOVIE_SIMILAR = '/movie/{movie_id}/similar'
 export const API_MOVIE_VIDEOS = '/movie/{movie_id}/videos'
 export const API_MOVIE_CREDITS = '/movie/{movie_id}/credits'
 
+export const API_MOVIE_COLLECTION_DETAIL = '/collection/{collection_id}'
+
 // TV
 export const API_TV_AIRING_TODAY = '/tv/airing_today'
 export const API_TV_TOP_RATED = '/tv/top_rated'
@@ -43,6 +45,7 @@ export const API_PERSON_TV_SHOWS = '/person/{person_id}/tv_credits'
 export const VAR_MOVIE_ID = '{movie_id}'
 export const VAR_TV_ID = '{tv_id}'
 export const VAR_PERSON_ID = '{person_id}'
+export const VAR_COLLECTION_ID = '{collection_id}'
 
 export const PARAM_LANGUAGE = 'language'
 export const PARAM_APPEND_TO_RESPONSE = 'append_to_response'
