@@ -35,6 +35,8 @@ export const API_TV_SIMILAR = '/tv/{tv_id}/similar'
 export const API_TV_VIDEOS = '/tv/{tv_id}/videos'
 export const API_TV_CREDITS = '/tv/{tv_id}/credits'
 
+export const API_TV_SEASON_DETAIL = '/tv/{tv_id}/season/{season_number}'
+
 // Celebrities
 export const API_PERSON_POPULAR = '/person/popular'
 export const API_PERSON_TRENDING = '/trending/person/day'
@@ -46,6 +48,7 @@ export const VAR_MOVIE_ID = '{movie_id}'
 export const VAR_TV_ID = '{tv_id}'
 export const VAR_PERSON_ID = '{person_id}'
 export const VAR_COLLECTION_ID = '{collection_id}'
+export const VAR_SEASON_NUMBER = '{season_number}'
 
 export const PARAM_LANGUAGE = 'language'
 export const PARAM_APPEND_TO_RESPONSE = 'append_to_response'

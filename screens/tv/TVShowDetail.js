@@ -8,7 +8,7 @@ import RoundedImage from '../../components/RoundedImage';
 import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import VideoTileItem from '../../components/VideoTileItem';
-import { PERSON_DETAIL, TV_SHOW_DETAIL } from '../../navigators/NavigatorNames';
+import { PERSON_DETAIL, TV_SEASON_DETAIL, TV_SHOW_DETAIL } from '../../navigators/NavigatorNames';
 import { createUrl, GET_ALL } from '../../network/Api';
 import { API_TV_DETAIL, API_TV_GENRES, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_TV_ATR_VALUE, VAR_TV_ID } from '../../network/NetworkData';
 import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorImageBorder, colorPrimary } from '../../utils/colors';
@@ -53,10 +53,12 @@ const TVShowDetail = ({ route, navigation }) => {
         });
     }
 
-    const onSeasonDetailClick = (id) => {
-        // navigation.push(TV_SHOW_DETAIL, {
-        //     tvId: id
-        // });
+    const onSeasonDetailClick = (seasonNumber) => {
+        navigation.push(TV_SEASON_DETAIL, {
+            tvId: tvShowDetail.id,
+            tvShowName: tvShowDetail.name,
+            seasonNumber: seasonNumber
+        });
     }
 
     const onPersonClick = (id) => {
@@ -186,9 +188,10 @@ const SeasonsComponent = ({ seasons, onSeasonDetailClick }) => {
                                     id={item.id}
                                     imageUrl={item['poster_path']}
                                     title={item['name']}
-                                    onClick={(id) => {
-                                        onSeasonDetailClick(id)
+                                    onClick={(id, item) => {
+                                        onSeasonDetailClick(item['season_number'])
                                     }}
+                                    item={item}
                                 />);
                         }}
                     />

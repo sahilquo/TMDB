@@ -5,9 +5,9 @@ import { IMAGE_BASE_URL } from '../network/NetworkData';
 import { colorGrey, colorImageBorder } from '../utils/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const VerticalItem = ({ id, imageUrl, title, description, onClick }) => {
+const VerticalItem = ({ id, imageUrl, title, description, onClick, item }) => {
     return (
-        <TouchableWithoutFeedback onPress={() => onClick(id)}>
+        <TouchableWithoutFeedback onPress={() => onClick(id, item)}>
             <View style={styles.container}>
                 <View style={styles.imageContainer}>
                     <Icon
