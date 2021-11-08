@@ -12,8 +12,12 @@ export const TV_SHOW_DETAIL = "Tv Show Detail";
 export const PERSON_DETAIL = "Person Detail";
 
 export const MOVIE_COLLECTION_DETAIL = "Movie Collection Detail";
+export const MOVIE_LIST = "Movie List";
 
 export const TV_SEASON_DETAIL = "Tv Season Detail";
+export const TV_SHOW_LIST = "Tv Show List";
+
+export const PERSON_LIST = "Person List";
 
 export const ALL_SCREENS = "All Screens";
 export const TAB_STACK = "Tab Stack";

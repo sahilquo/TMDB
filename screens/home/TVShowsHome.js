@@ -8,7 +8,7 @@ import { createUrl, GET_ALL } from '../../network/Api';
 import { ActivityIndicator } from 'react-native-paper';
 import { colorAccent } from '../../utils/colors';
 import { API_TV_GENRES, API_TV_AIRING_TODAY, API_TV_TRENDING, API_TV_TOP_RATED, API_TV_POPULAR } from '../../network/NetworkData';
-import { ALL_SCREENS, TV_SHOW_DETAIL } from '../../navigators/NavigatorNames';
+import { ALL_SCREENS, TV_SHOW_DETAIL, TV_SHOW_LIST } from '../../navigators/NavigatorNames';
 
 const TVShowsHome = ({ navigation }) => {
     const [isLoading, setLoading] = useState(true);
@@ -49,9 +49,16 @@ const TVShowsHome = ({ navigation }) => {
                 tvId: id
             }
         })
-        // navigation.navigate(TV_SHOW_DETAIL, {
-        //     tvId: id
-        // });
+    }
+
+    const onSeeAllClick = (title, apiUrl) => {
+        navigation.push(ALL_SCREENS, {
+            screen: TV_SHOW_LIST,
+            params: {
+                title: title,
+                apiUrl: apiUrl
+            }
+        })
     }
 
     if (isLoading) {
@@ -66,7 +73,7 @@ const TVShowsHome = ({ navigation }) => {
                 <View style={[globalStyles.container]}>
                     <SectionHeader
                         title='Airing Today'
-                        showAll={() => { }} />
+                        showAll={() => { onSeeAllClick('Airing Today', API_TV_AIRING_TODAY) }} />
                     <FlatList
                         style={{ flexGrow: 0 }}
                         showsHorizontalScrollIndicator={false}
@@ -77,7 +84,7 @@ const TVShowsHome = ({ navigation }) => {
                     />
                     <SectionHeader
                         title='Trending'
-                        showAll={() => { }} />
+                        showAll={() => { onSeeAllClick('Trending', API_TV_TRENDING) }} />
                     <FlatList
                         style={{ flexGrow: 0 }}
                         showsHorizontalScrollIndicator={false}
@@ -88,7 +95,7 @@ const TVShowsHome = ({ navigation }) => {
                     />
                     <SectionHeader
                         title='Top Rated'
-                        showAll={() => { }} />
+                        showAll={() => { onSeeAllClick('Top Rated', API_TV_TOP_RATED) }} />
                     <FlatList
                         style={{ flexGrow: 0 }}
                         showsHorizontalScrollIndicator={false}
@@ -99,7 +106,7 @@ const TVShowsHome = ({ navigation }) => {
                     />
                     <SectionHeader
                         title='Popular'
-                        showAll={() => { }} />
+                        showAll={() => { onSeeAllClick('Popular', API_TV_POPULAR) }} />
                     <FlatList
                         style={{ flexGrow: 0 }}
                         showsHorizontalScrollIndicator={false}

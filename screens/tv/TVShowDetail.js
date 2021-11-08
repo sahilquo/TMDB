@@ -8,9 +8,9 @@ import RoundedImage from '../../components/RoundedImage';
 import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import VideoTileItem from '../../components/VideoTileItem';
-import { PERSON_DETAIL, TV_SEASON_DETAIL, TV_SHOW_DETAIL } from '../../navigators/NavigatorNames';
+import { PERSON_DETAIL, TV_SEASON_DETAIL, TV_SHOW_DETAIL, TV_SHOW_LIST } from '../../navigators/NavigatorNames';
 import { createUrl, GET_ALL } from '../../network/Api';
-import { API_TV_DETAIL, API_TV_GENRES, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_TV_ATR_VALUE, VAR_TV_ID } from '../../network/NetworkData';
+import { API_TV_DETAIL, API_TV_GENRES, API_TV_RECOMMENDATIONS, API_TV_SIMILAR, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_TV_ATR_VALUE, VAR_TV_ID } from '../../network/NetworkData';
 import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorImageBorder, colorPrimary } from '../../utils/colors';
 import { globalStyles } from '../../utils/globalStyles';
 import { convertCurrency, formatDate, roundNum } from '../../utils/ValueUtils';
@@ -67,6 +67,13 @@ const TVShowDetail = ({ route, navigation }) => {
         });
     }
 
+    const onSeeAllClick = (title, apiUrl) => {
+        navigation.push(TV_SHOW_LIST, {
+            title: title,
+            apiUrl: apiUrl.replace(VAR_TV_ID, tvId)
+        });
+    }
+
     if (isLoading || tvShowDetail === null) {
         return (
             <View style={[globalStyles.container, styles.container]}>
@@ -87,7 +94,7 @@ const TVShowDetail = ({ route, navigation }) => {
                     <BasicDetailComponent tvShowDetail={tvShowDetail} />
                     <Divider />
                     <SeasonsComponent
-                        seasons={tvShowDetail.seasons}
+                        seasons={tvShowDetail.seasons.filter(item => item['season_number'] > 0)}
                         genres={tvShowDetail['genres']}
                         onSeasonDetailClick={onSeasonDetailClick} />
                     <CastListComponent
@@ -99,11 +106,13 @@ const TVShowDetail = ({ route, navigation }) => {
                     <RecommendedComponent
                         genre={genre}
                         recommended={tvShowDetail.recommendations.results}
-                        onTVShowClick={onTVShowClick} />
+                        onTVShowClick={onTVShowClick}
+                        onSeeAllClick={onSeeAllClick} />
                     <SimilarComponent
                         genre={genre}
                         similar={tvShowDetail.similar.results}
-                        onTVShowClick={onTVShowClick} />
+                        onTVShowClick={onTVShowClick}
+                        onSeeAllClick={onSeeAllClick} />
                 </View>
             </ScrollView>
         );
@@ -383,13 +392,13 @@ const VideosComponent = ({ videos }) => {
     }
 }
 
-const RecommendedComponent = ({ genre, recommended, onTVShowClick }) => {
+const RecommendedComponent = ({ genre, recommended, onTVShowClick, onSeeAllClick }) => {
     if (recommended.length > 0) {
         return (
             <View>
                 <SectionHeader
                     title='Recommended'
-                    showAll={() => { }} />
+                    showAll={() => { onSeeAllClick('Recommended', API_TV_RECOMMENDATIONS) }} />
                 <FlatList
                     style={{ flexGrow: 0 }}
                     showsHorizontalScrollIndicator={false}
@@ -406,13 +415,13 @@ const RecommendedComponent = ({ genre, recommended, onTVShowClick }) => {
     }
 }
 
-const SimilarComponent = ({ genre, similar, onTVShowClick }) => {
+const SimilarComponent = ({ genre, similar, onTVShowClick, onSeeAllClick }) => {
     if (similar.length > 0) {
         return (
             <View>
                 <SectionHeader
                     title='Similar'
-                    showAll={() => { }} />
+                    showAll={() => { onSeeAllClick('Similar', API_TV_SIMILAR) }} />
                 <FlatList
                     style={{ flexGrow: 0 }}
                     showsHorizontalScrollIndicator={false}

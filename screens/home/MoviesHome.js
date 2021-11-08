@@ -8,7 +8,7 @@ import { createUrl, GET_ALL } from '../../network/Api';
 import { API_MOVIES_GENRES, API_MOVIES_POPULAR, API_MOVIES_NOW_PLAYING, API_MOVIES_TRENDING, API_MOVIES_UPCOMING, API_MOVIES_TOP_RATED } from '../../network/NetworkData';
 import { ActivityIndicator } from 'react-native-paper';
 import { colorAccent } from '../../utils/colors';
-import { ALL_SCREENS, MOVIE_DETAIL } from '../../navigators/NavigatorNames';
+import { ALL_SCREENS, MOVIE_DETAIL, MOVIE_LIST } from '../../navigators/NavigatorNames';
 
 
 const MoviesHome = ({ navigation }) => {
@@ -57,6 +57,16 @@ const MoviesHome = ({ navigation }) => {
         // });
     }
 
+    const onSeeAllClick = (title, apiUrl) => {
+        navigation.push(ALL_SCREENS, {
+            screen: MOVIE_LIST,
+            params: {
+                title: title,
+                apiUrl: apiUrl
+            }
+        })
+    }
+
     if (isLoading) {
         return (
             <View style={[globalStyles.container, styles.container]}>
@@ -69,7 +79,7 @@ const MoviesHome = ({ navigation }) => {
                 <View style={[globalStyles.container]}>
                     <SectionHeader
                         title='Popular'
-                        showAll={() => { }} />
+                        showAll={() => { onSeeAllClick('Popular', API_MOVIES_POPULAR) }} />
                     <FlatList
                         style={{ flexGrow: 0 }}
                         showsHorizontalScrollIndicator={false}
@@ -80,7 +90,7 @@ const MoviesHome = ({ navigation }) => {
                     />
                     <SectionHeader
                         title='Playing In Theatres'
-                        showAll={() => { }} />
+                        showAll={() => { onSeeAllClick('Playing In Theatres', API_MOVIES_NOW_PLAYING) }} />
                     <FlatList
                         style={{ flexGrow: 0 }}
                         showsHorizontalScrollIndicator={false}
@@ -91,7 +101,7 @@ const MoviesHome = ({ navigation }) => {
                     />
                     <SectionHeader
                         title='Trending'
-                        showAll={() => { }} />
+                        showAll={() => { onSeeAllClick('Trending', API_MOVIES_TRENDING) }} />
                     <FlatList
                         style={{ flexGrow: 0 }}
                         showsHorizontalScrollIndicator={false}
@@ -102,7 +112,7 @@ const MoviesHome = ({ navigation }) => {
                     />
                     <SectionHeader
                         title='Top Rated'
-                        showAll={() => { }} />
+                        showAll={() => { onSeeAllClick('Top Rated', API_MOVIES_TOP_RATED) }} />
                     <FlatList
                         style={{ flexGrow: 0 }}
                         showsHorizontalScrollIndicator={false}
@@ -113,7 +123,7 @@ const MoviesHome = ({ navigation }) => {
                     />
                     <SectionHeader
                         title='Upcoming'
-                        showAll={() => { }} />
+                        showAll={() => { onSeeAllClick('Upcoming', API_MOVIES_UPCOMING) }} />
                     <FlatList
                         style={{ flexGrow: 0 }}
                         showsHorizontalScrollIndicator={false}

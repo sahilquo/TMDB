@@ -8,7 +8,7 @@ import { createUrl, GET_ALL } from '../../network/Api';
 import { API_MOVIES_GENRES, API_MOVIES_POPULAR, API_MOVIES_NOW_PLAYING, API_MOVIES_TRENDING, API_MOVIES_UPCOMING, API_MOVIES_TOP_RATED, API_PERSON_POPULAR, API_PERSON_TRENDING } from '../../network/NetworkData';
 import { ActivityIndicator } from 'react-native-paper';
 import { colorAccent } from '../../utils/colors';
-import { ALL_SCREENS, MOVIE_DETAIL, PERSON_DETAIL } from '../../navigators/NavigatorNames';
+import { ALL_SCREENS, MOVIE_DETAIL, PERSON_DETAIL, PERSON_LIST } from '../../navigators/NavigatorNames';
 import PersonVerticalItem from '../person/PersonVerticalItem';
 import PersonHorizontalItem from '../person/PersonHorizontaltem';
 
@@ -35,13 +35,20 @@ const CelebritiesHome = ({ navigation }) => {
     }, []);
 
     const onPersonClick = (id) => {
-        // navigation.navigate(PERSON_DETAIL, {
-        //     personId: id
-        // });
         navigation.push(ALL_SCREENS, {
             screen: PERSON_DETAIL,
             params: {
                 personId: id
+            }
+        })
+    }
+
+    const onSeeAllClick = (title, apiUrl) => {
+        navigation.push(ALL_SCREENS, {
+            screen: PERSON_LIST,
+            params: {
+                title: title,
+                apiUrl: apiUrl
             }
         })
     }
@@ -60,7 +67,7 @@ const CelebritiesHome = ({ navigation }) => {
                 <View style={[globalStyles.container]}>
                     <SectionHeader
                         title='Popular'
-                        showAll={() => { }} />
+                        showAll={() => { onSeeAllClick('Popular', API_PERSON_POPULAR) }} />
                     <FlatList
                         style={{ flexGrow: 0 }}
                         showsHorizontalScrollIndicator={false}
@@ -71,7 +78,7 @@ const CelebritiesHome = ({ navigation }) => {
                     />
                     <SectionHeader
                         title='Trending'
-                        showAll={() => { }} />
+                        showAll={() => { onSeeAllClick('Trending', API_PERSON_TRENDING) }} />
                     <FlatList
                         style={{ flexGrow: 0, marginBottom: 20 }}
                         showsHorizontalScrollIndicator={false}

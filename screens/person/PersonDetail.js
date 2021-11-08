@@ -9,7 +9,7 @@ import RoundedImage from '../../components/RoundedImage';
 import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import VideoTileItem from '../../components/VideoTileItem';
-import { MOVIES_HOME_STACK, MOVIE_DETAIL, TV_SHOWS_HOME_STACK, TV_SHOW_DETAIL } from '../../navigators/NavigatorNames';
+import { MOVIES_HOME_STACK, MOVIE_DETAIL, MOVIE_LIST, TV_SHOWS_HOME_STACK, TV_SHOW_DETAIL } from '../../navigators/NavigatorNames';
 import { createUrl, GET_ALL } from '../../network/Api';
 import { API_MOVIES_GENRES, API_MOVIE_DETAIL, API_PERSON_DETAIL, API_TV_GENRES, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_MOVIES_ATR_VALUE, PARAM_PERSON_ATR_VALUE, PARAM_TV_ATR_VALUE, VAR_MOVIE_ID, VAR_PERSON_ID } from '../../network/NetworkData';
 import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorImageBorder, colorPrimary } from '../../utils/colors';
@@ -63,6 +63,13 @@ const PersonDetail = ({ route, navigation }) => {
         });
     }
 
+    const onSeeAllMovieClick = (title, apiUrl) => {
+        navigation.push(MOVIE_LIST, {
+            title: title,
+            apiUrl: apiUrl.replace(VAR_PERSON_ID, personId)
+        });
+    }
+
     if (isLoading || personDetail === null) {
         return (
             <View style={[globalStyles.container, styles.container]}>
@@ -81,7 +88,8 @@ const PersonDetail = ({ route, navigation }) => {
                     <MoviesComponent
                         genre={movieGenre}
                         movies={personDetail['movie_credits'].cast}
-                        onMovieClick={onMovieClick} />
+                        onMovieClick={onMovieClick}
+                        onSeeAllMovieClick={onSeeAllMovieClick} />
                     <TvShowComponent
                         genre={tvGenre}
                         tvShows={personDetail['tv_credits'].cast}
@@ -140,7 +148,7 @@ const BiographyComponent = ({ personDetail }) => {
     );
 }
 
-const MoviesComponent = ({ genre, movies, onMovieClick }) => {
+const MoviesComponent = ({ genre, movies, onMovieClick, onSeeAllMovieClick }) => {
     if (movies.length > 0) {
         return (
             <View>

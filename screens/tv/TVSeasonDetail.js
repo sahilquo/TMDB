@@ -49,28 +49,30 @@ const TVSeasonDetail = ({ route, navigation }) => {
         );
     } else {
         return (
-            <ScrollView>
-                <View style={[{ flex: 1, backgroundColor: colorPrimary, }]}>
-                    <BasicDetailComponent seasonDetail={seasonDetail} tvShowName={tvShowName} />
-                    <Divider />
-                    {
-                        seasonDetail['overview'].length > 0
-                            ? <View>
-                                <SectionHeader
-                                    title='About this Show'
-                                    hideShowAll={true} />
-                                <Text style={[styles.description, {
-                                    marginHorizontal: 12,
-                                    marginTop: 0, fontSize: 14
-                                }]}>{seasonDetail['overview']}</Text>
-                                <Divider />
-                            </View>
-                            : null
-                    }
+            <View style={[{ flex: 1, backgroundColor: colorPrimary, }]}>
+                <ScrollView>
+                    <View style={[{ flex: 1, backgroundColor: colorPrimary, }]}>
+                        <BasicDetailComponent seasonDetail={seasonDetail} tvShowName={tvShowName} />
+                        <Divider />
+                        {
+                            seasonDetail['overview'].length > 0
+                                ? <View>
+                                    <SectionHeader
+                                        title='About this Show'
+                                        hideShowAll={true} />
+                                    <Text style={[styles.description, {
+                                        marginHorizontal: 12,
+                                        marginTop: 0, fontSize: 14
+                                    }]}>{seasonDetail['overview']}</Text>
+                                    <Divider />
+                                </View>
+                                : null
+                        }
 
-                    <EpisodesListComponent episodes={seasonDetail.episodes} />
-                </View>
-            </ScrollView>
+                        <EpisodesListComponent episodes={seasonDetail.episodes} />
+                    </View>
+                </ScrollView>
+            </View>
         );
     }
 }

@@ -9,9 +9,9 @@ import RoundedImage from '../../components/RoundedImage';
 import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import VideoTileItem from '../../components/VideoTileItem';
-import { MOVIE_COLLECTION_DETAIL, MOVIE_DETAIL, PERSON_DETAIL } from '../../navigators/NavigatorNames';
+import { MOVIE_COLLECTION_DETAIL, MOVIE_DETAIL, MOVIE_LIST, PERSON_DETAIL } from '../../navigators/NavigatorNames';
 import { createUrl, GET_ALL } from '../../network/Api';
-import { API_MOVIES_GENRES, API_MOVIE_DETAIL, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_MOVIES_ATR_VALUE, VAR_MOVIE_ID } from '../../network/NetworkData';
+import { API_MOVIES_GENRES, API_MOVIE_DETAIL, API_MOVIE_RECOMMENDATIONS, API_MOVIE_SIMILAR, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_MOVIES_ATR_VALUE, VAR_MOVIE_ID } from '../../network/NetworkData';
 import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorImageBorder, colorPrimary } from '../../utils/colors';
 import { globalStyles } from '../../utils/globalStyles';
 import { convertCurrency, formatDate, roundNum } from '../../utils/ValueUtils';
@@ -66,6 +66,13 @@ const MovieDetail = ({ route, navigation }) => {
         });
     }
 
+    const onSeeAllClick = (title, apiUrl) => {
+        navigation.push(MOVIE_LIST, {
+            title: title,
+            apiUrl: apiUrl.replace(VAR_MOVIE_ID, movieId)
+        });
+    }
+
     if (isLoading || movieDetail === null) {
         return (
             <View style={[globalStyles.container, styles.container]}>
@@ -98,11 +105,13 @@ const MovieDetail = ({ route, navigation }) => {
                     <RecommendedComponent
                         genre={genre}
                         recommended={movieDetail.recommendations.results}
-                        onMovieClick={onMovieClick} />
+                        onMovieClick={onMovieClick}
+                        onSeeAllClick={onSeeAllClick} />
                     <SimilarComponent
                         genre={genre}
                         similar={movieDetail.similar.results}
-                        onMovieClick={onMovieClick} />
+                        onMovieClick={onMovieClick}
+                        onSeeAllClick={onSeeAllClick} />
                 </View>
             </ScrollView>
         );
@@ -376,13 +385,13 @@ const VideosComponent = ({ videos }) => {
     }
 }
 
-const RecommendedComponent = ({ genre, recommended, onMovieClick }) => {
+const RecommendedComponent = ({ genre, recommended, onMovieClick, onSeeAllClick }) => {
     if (recommended.length > 0) {
         return (
             <View>
                 <SectionHeader
                     title='Recommended'
-                    showAll={() => { }} />
+                    showAll={() => { onSeeAllClick('Recommended', API_MOVIE_RECOMMENDATIONS) }} />
                 <FlatList
                     style={{ flexGrow: 0 }}
                     showsHorizontalScrollIndicator={false}
@@ -399,13 +408,13 @@ const RecommendedComponent = ({ genre, recommended, onMovieClick }) => {
     }
 }
 
-const SimilarComponent = ({ genre, similar, onMovieClick }) => {
+const SimilarComponent = ({ genre, similar, onMovieClick, onSeeAllClick }) => {
     if (similar.length > 0) {
         return (
             <View>
                 <SectionHeader
                     title='Similar'
-                    showAll={() => { }} />
+                    showAll={() => { onSeeAllClick('Similar', API_MOVIE_SIMILAR) }} />
                 <FlatList
                     style={{ flexGrow: 0 }}
                     showsHorizontalScrollIndicator={false}

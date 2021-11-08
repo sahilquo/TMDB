@@ -15,7 +15,7 @@ const SectionHeader = ({ title, hideShowAll, showAll }) => {
             {hideShowAll ? null :
                 <TouchableOpacity
                     style={styles.seeAll}
-                    onPress={showAll()}>
+                    onPress={() => showAll()}>
                     <Text style={{ fontSize: 13, color: colorGrey }}>See all</Text>
                     <Icon name='keyboard-arrow-right' size={20} color={colorGrey} />
                 </TouchableOpacity>

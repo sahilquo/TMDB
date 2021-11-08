@@ -52,6 +52,7 @@ export const VAR_SEASON_NUMBER = '{season_number}'
 
 export const PARAM_LANGUAGE = 'language'
 export const PARAM_APPEND_TO_RESPONSE = 'append_to_response'
+export const PARAM_PAGE = 'page'
 
 export const PARAM_LANGUAGE_VALUE = 'en-US'
 export const PARAM_MOVIES_ATR_VALUE = 'credits,videos,recommendations,similar'

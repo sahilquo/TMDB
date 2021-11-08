@@ -1,8 +1,8 @@
 import React from 'react';
 import { API_KEY, BASE_URL } from './NetworkData';
 
-export const GET = (endpoint, onComplete, onError) => {
-    fetch(BASE_URL + endpoint + '?api_key=' + API_KEY)
+export const GET = (url, onComplete, onError) => {
+    fetch(url)
         .then((response) => response.json())
         .then((json) => onComplete(json))
         .catch((error) => onError(error));

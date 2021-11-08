@@ -5,11 +5,14 @@ import MoviesHome from '../screens/home/MoviesHome';
 import TVShowsHome from '../screens/home/TVShowsHome';
 import MovieCollectionDetail from '../screens/movies/MovieCollectionDetail';
 import MovieDetail from '../screens/movies/MovieDetail';
+import MovieList from '../screens/movies/MovieList';
 import PersonDetail from '../screens/person/PersonDetail';
+import PersonList from '../screens/person/PersonList';
 import TVSeasonDetail from '../screens/tv/TVSeasonDetail';
 import TVShowDetail from '../screens/tv/TVShowDetail';
+import TVShowList from '../screens/tv/TVShowList';
 import { colorPrimaryDark } from '../utils/colors';
-import { ALL_SCREENS, CELEBRITIES_HOME, MOVIES_HOME, MOVIE_COLLECTION_DETAIL, MOVIE_DETAIL, PERSON_DETAIL, TAB_STACK, TV_SEASON_DETAIL, TV_SHOWS_HOME, TV_SHOW_DETAIL } from './NavigatorNames';
+import { ALL_SCREENS, CELEBRITIES_HOME, MOVIES_HOME, MOVIE_COLLECTION_DETAIL, MOVIE_DETAIL, MOVIE_LIST, PERSON_DETAIL, PERSON_LIST, TAB_STACK, TV_SEASON_DETAIL, TV_SHOWS_HOME, TV_SHOW_DETAIL, TV_SHOW_LIST } from './NavigatorNames';
 import TabNavigator from './TabNavigator';
 
 const Stack = createNativeStackNavigator();
@@ -71,6 +74,24 @@ const AllStack = () => {
             <Stack.Screen
                 name={TV_SEASON_DETAIL}
                 component={TVSeasonDetail}
+                options={{
+                    title: ''
+                }} />
+            <Stack.Screen
+                name={MOVIE_LIST}
+                component={MovieList}
+                options={{
+                    title: ''
+                }} />
+            <Stack.Screen
+                name={TV_SHOW_LIST}
+                component={TVShowList}
+                options={{
+                    title: ''
+                }} />
+            <Stack.Screen
+                name={PERSON_LIST}
+                component={PersonList}
                 options={{
                     title: ''
                 }} />
