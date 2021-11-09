@@ -6,6 +6,8 @@ import { createUrl, GET_ALL } from '../../network/Api';
 import { API_PERSON_POPULAR, API_PERSON_TRENDING, PARAM_REGION, PARAM_REGION_VALUE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE } from '../../network/NetworkData';
 import { ActivityIndicator } from 'react-native-paper';
 import { colorAccent } from '../../utils/colors';
+import { createModifiedList } from '../../utils/ValueUtils';
+
 import { ALL_SCREENS, PERSON_DETAIL, PERSON_LIST } from '../../navigators/NavigatorNames';
 import PersonVerticalItem from '../person/PersonVerticalItem';
 import PersonHorizontalItem from '../person/PersonHorizontaltem';
@@ -66,7 +68,7 @@ const CelebritiesHome = ({ navigation }) => {
         const modifiedPopular = createModifiedList(popular, 2);
         const modifiedTrending = createModifiedList(trending, 4);
         return (
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={[globalStyles.container]}>
                     <SectionHeader
                         title='Popular'
@@ -94,16 +96,6 @@ const CelebritiesHome = ({ navigation }) => {
             </ScrollView>
         );
     }
-}
-
-const createModifiedList = (popular, chunk) => {
-    const modifiedList = [];
-    var i, j, temporary;
-    for (i = 0, j = popular.length; i < j; i += chunk) {
-        temporary = popular.slice(i, i + chunk);
-        modifiedList.push(temporary);
-    }
-    return modifiedList;
 }
 
 const PopularMainComponent = (list, onPersonClick) => {

@@ -50,7 +50,7 @@ const TVSeasonDetail = ({ route, navigation }) => {
     } else {
         return (
             <View style={[{ flex: 1, backgroundColor: colorPrimary, }]}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={[{ flex: 1, backgroundColor: colorPrimary, }]}>
                         <BasicDetailComponent seasonDetail={seasonDetail} tvShowName={tvShowName} />
                         <Divider />

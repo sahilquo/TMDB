@@ -88,7 +88,7 @@ const TVShowDetail = ({ route, navigation }) => {
         );
     } else {
         return (
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={[{ flex: 1, backgroundColor: colorPrimary, }]}>
                     <FastImage
                         style={styles.bannerImage}

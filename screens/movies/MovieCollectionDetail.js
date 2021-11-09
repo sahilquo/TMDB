@@ -59,7 +59,7 @@ const MovieCollectionDetail = ({ route, navigation }) => {
     } else {
         return (
             <View style={[{ flex: 1, backgroundColor: colorPrimary, }]}>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={[{ flex: 1, backgroundColor: colorPrimary, }]}>
                         <FastImage
                             style={styles.bannerImage}

@@ -26,6 +26,16 @@ export const formatDate = (value) => {
     return format(date, 'dd MMMM yyyy');
 }
 
+export const createModifiedList = (list, chunk) => {
+    const modifiedList = [];
+    var i, j, temporary;
+    for (i = 0, j = list.length; i < j; i += chunk) {
+        temporary = list.slice(i, i + chunk);
+        modifiedList.push(temporary);
+    }
+    return modifiedList;
+}
+
 export const getVideoThumbnail = (videoKey) => {
     return `${YOUTUBE_THUBNAIL_BASE_URL}/${videoKey}/${THUMBNAIL_QUALITY.medium}`;
 }

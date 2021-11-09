@@ -9,6 +9,8 @@ import { API_MOVIES_GENRES, API_MOVIES_POPULAR, API_MOVIES_NOW_PLAYING, API_MOVI
 import { ActivityIndicator } from 'react-native-paper';
 import { colorAccent } from '../../utils/colors';
 import { ALL_SCREENS, MOVIE_DETAIL, MOVIE_LIST } from '../../navigators/NavigatorNames';
+import SmallHorizontalItem from '../../components/SmallHorizontaltem';
+import { createModifiedList } from '../../utils/ValueUtils';
 
 
 const MoviesHome = ({ navigation }) => {
@@ -77,8 +79,10 @@ const MoviesHome = ({ navigation }) => {
             </View>
         );
     } else {
+        const modifiedTopRated = createModifiedList(topRated, 4);
+
         return (
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={[globalStyles.container]}>
                     <SectionHeader
                         title='Popular'
@@ -119,10 +123,10 @@ const MoviesHome = ({ navigation }) => {
                     <FlatList
                         style={{ flexGrow: 0 }}
                         showsHorizontalScrollIndicator={false}
-                        data={topRated}
+                        data={modifiedTopRated}
                         horizontal
-                        keyExtractor={({ id }) => id}
-                        renderItem={({ item }) => getHorizontalRenderItem(item, genre, onMovieClick)}
+                        //keyExtractor={({ id }) => id}
+                        renderItem={({ item }) => TopRatedMainComponent(item, genre, onMovieClick)}
                     />
                     <SectionHeader
                         title='Upcoming'
@@ -140,6 +144,29 @@ const MoviesHome = ({ navigation }) => {
 
         );
     }
+}
+
+const TopRatedMainComponent = (list, genre, onMovieClick) => {
+    return (
+        <FlatList
+            data={list}
+            keyExtractor={({ id }) => id}
+            renderItem={({ item }) => getSmallHorizontalRenderItem(item, genre, onMovieClick)}
+        />
+    );
+}
+
+const getSmallHorizontalRenderItem = (item, genre, onMovieClick) => {
+    const genreNamesList = genre.filter(it => item['genre_ids'].includes(it.id)).map(it => it.name).join(", ")
+    return <SmallHorizontalItem
+        id={item.id}
+        imageUrl={item['backdrop_path']}
+        title={item['title']}
+        description={genreNamesList}
+        onClick={(id) => {
+            onMovieClick(id)
+        }}
+    />
 }
 
 const getHorizontalRenderItem = (item, genre, onMovieClick) => {

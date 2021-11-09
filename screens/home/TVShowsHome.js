@@ -9,6 +9,8 @@ import { ActivityIndicator } from 'react-native-paper';
 import { colorAccent } from '../../utils/colors';
 import { API_TV_GENRES, API_TV_AIRING_TODAY, API_TV_TRENDING, API_TV_TOP_RATED, API_TV_POPULAR, PARAM_REGION, PARAM_REGION_VALUE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE } from '../../network/NetworkData';
 import { ALL_SCREENS, TV_SHOW_DETAIL, TV_SHOW_LIST } from '../../navigators/NavigatorNames';
+import { createModifiedList } from '../../utils/ValueUtils';
+import SmallHorizontalItem from '../../components/SmallHorizontaltem';
 
 const TVShowsHome = ({ navigation }) => {
     const [isLoading, setLoading] = useState(true);
@@ -71,8 +73,10 @@ const TVShowsHome = ({ navigation }) => {
             </View>
         );
     } else {
+        const modifiedTopRated = createModifiedList(topRated, 4);
+
         return (
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={[globalStyles.container]}>
                     <SectionHeader
                         title='Airing Today'
@@ -102,10 +106,10 @@ const TVShowsHome = ({ navigation }) => {
                     <FlatList
                         style={{ flexGrow: 0 }}
                         showsHorizontalScrollIndicator={false}
-                        data={topRated}
+                        data={modifiedTopRated}
                         horizontal
-                        keyExtractor={({ id }) => id}
-                        renderItem={({ item }) => getHorizontalRenderItem(item, genre, onTvShowClick)}
+                        //keyExtractor={({ id }) => id}
+                        renderItem={({ item }) => TopRatedMainComponent(item, genre, onTvShowClick)}
                     />
                     <SectionHeader
                         title='Popular'
@@ -122,6 +126,28 @@ const TVShowsHome = ({ navigation }) => {
             </ScrollView>
         );
     }
+}
+
+const TopRatedMainComponent = (list, genre, onTvShowClick) => {
+    return (
+        <FlatList
+            data={list}
+            keyExtractor={({ id }) => id}
+            renderItem={({ item }) => getSmallHorizontalRenderItem(item, genre, onTvShowClick)}
+        />
+    );
+}
+
+const getSmallHorizontalRenderItem = (item, genre, onTvShowClick) => {
+    const genreNamesList = genre.filter(it => item['genre_ids'].includes(it.id)).map(it => it.name).join(", ")
+    return <SmallHorizontalItem
+        id={item.id}
+        imageUrl={item['backdrop_path']}
+        title={item['name']}
+        description={genreNamesList}
+        onClick={(id) => {
+            onTvShowClick(id)
+        }} />
 }
 
 const getHorizontalRenderItem = (item, genre, onTvShowClick) => {

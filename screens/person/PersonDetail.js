@@ -87,7 +87,7 @@ const PersonDetail = ({ route, navigation }) => {
         );
     } else {
         return (
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={[{ flex: 1, backgroundColor: colorPrimary, }]}>
                     <BasicDetailComponent personDetail={personDetail} />
                     <Divider />
