@@ -9,9 +9,9 @@ import RoundedImage from '../../components/RoundedImage';
 import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import VideoTileItem from '../../components/VideoTileItem';
-import { MOVIES_HOME_STACK, MOVIE_DETAIL, MOVIE_LIST, TV_SHOWS_HOME_STACK, TV_SHOW_DETAIL } from '../../navigators/NavigatorNames';
+import { MOVIES_HOME_STACK, MOVIE_DETAIL, MOVIE_LIST, PERSON_CREDITS, TV_SHOWS_HOME_STACK, TV_SHOW_DETAIL } from '../../navigators/NavigatorNames';
 import { createUrl, GET_ALL } from '../../network/Api';
-import { API_MOVIES_GENRES, API_MOVIE_DETAIL, API_PERSON_DETAIL, API_TV_GENRES, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_MOVIES_ATR_VALUE, PARAM_PERSON_ATR_VALUE, PARAM_TV_ATR_VALUE, VAR_MOVIE_ID, VAR_PERSON_ID } from '../../network/NetworkData';
+import { API_MOVIES_GENRES, API_MOVIE_DETAIL, API_PERSON_DETAIL, API_PERSON_MOVIES, API_PERSON_TV_SHOWS, API_TV_GENRES, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_MOVIES_ATR_VALUE, PARAM_PERSON_ATR_VALUE, PARAM_TV_ATR_VALUE, VAR_MOVIE_ID, VAR_PERSON_ID } from '../../network/NetworkData';
 import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorImageBorder, colorPrimary } from '../../utils/colors';
 import { globalStyles } from '../../utils/globalStyles';
 import { convertCurrency, formatDate, roundNum } from '../../utils/ValueUtils';
@@ -63,10 +63,19 @@ const PersonDetail = ({ route, navigation }) => {
         });
     }
 
-    const onSeeAllMovieClick = (title, apiUrl) => {
-        navigation.push(MOVIE_LIST, {
-            title: title,
-            apiUrl: apiUrl.replace(VAR_PERSON_ID, personId)
+    const onSeeAllMovieClick = () => {
+        navigation.push(PERSON_CREDITS, {
+            title: 'Movies',
+            apiUrl: API_PERSON_MOVIES.replace(VAR_PERSON_ID, personDetail.id),
+            genreApiUrl: API_MOVIES_GENRES
+        });
+    }
+
+    const onSeeAllTvShowClick = () => {
+        navigation.push(PERSON_CREDITS, {
+            title: 'Tv Shows',
+            apiUrl: API_PERSON_TV_SHOWS.replace(VAR_PERSON_ID, personDetail.id),
+            genreApiUrl: API_TV_GENRES
         });
     }
 
@@ -93,7 +102,8 @@ const PersonDetail = ({ route, navigation }) => {
                     <TvShowComponent
                         genre={tvGenre}
                         tvShows={personDetail['tv_credits'].cast}
-                        onTvShowClick={onTvShowClick} />
+                        onTvShowClick={onTvShowClick}
+                        onSeeAllTvShowClick={onSeeAllTvShowClick} />
                 </View>
             </ScrollView>
         );
@@ -154,7 +164,7 @@ const MoviesComponent = ({ genre, movies, onMovieClick, onSeeAllMovieClick }) =>
             <View>
                 <SectionHeader
                     title='Movies'
-                    showAll={() => { }} />
+                    showAll={() => { onSeeAllMovieClick() }} />
                 <FlatList
                     style={{ flexGrow: 0 }}
                     showsHorizontalScrollIndicator={false}
@@ -171,13 +181,13 @@ const MoviesComponent = ({ genre, movies, onMovieClick, onSeeAllMovieClick }) =>
     }
 }
 
-const TvShowComponent = ({ genre, tvShows, onTvShowClick }) => {
+const TvShowComponent = ({ genre, tvShows, onTvShowClick, onSeeAllTvShowClick }) => {
     if (tvShows.length > 0) {
         return (
             <View>
                 <SectionHeader
                     title='Tv Shows'
-                    showAll={() => { }} />
+                    showAll={() => { onSeeAllTvShowClick() }} />
                 <FlatList
                     style={{ flexGrow: 0 }}
                     showsHorizontalScrollIndicator={false}

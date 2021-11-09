@@ -5,6 +5,10 @@ export const roundNum = (num) => {
     return Math.round(num * 2) / 2;
 }
 
+export const distinctArray = (array, param) => {
+    return array.filter((item, index, arr) => arr.findIndex(it => (it[param] === item[param])) === index)
+}
+
 export const convertCurrency = (num) => {
     if (num > 999 && num < 1000000) {
         return '$' + (num / 1000).toFixed(1).replace(/[.,]0$/, "") + ' K'; // convert to K for number from > 1000 < 1 million 

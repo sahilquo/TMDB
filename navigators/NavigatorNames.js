@@ -18,6 +18,7 @@ export const TV_SEASON_DETAIL = "Tv Season Detail";
 export const TV_SHOW_LIST = "Tv Show List";
 
 export const PERSON_LIST = "Person List";
+export const PERSON_CREDITS = "Person Credits";
 
 export const ALL_SCREENS = "All Screens";
 export const TAB_STACK = "Tab Stack";
