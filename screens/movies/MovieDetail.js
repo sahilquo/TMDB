@@ -9,7 +9,7 @@ import RoundedImage from '../../components/RoundedImage';
 import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import VideoTileItem from '../../components/VideoTileItem';
-import { MOVIE_COLLECTION_DETAIL, MOVIE_DETAIL, MOVIE_LIST, PERSON_DETAIL } from '../../navigators/NavigatorNames';
+import { MOVIE_COLLECTION_DETAIL, MOVIE_CREDITS, MOVIE_DETAIL, MOVIE_LIST, PERSON_DETAIL } from '../../navigators/NavigatorNames';
 import { createUrl, GET_ALL } from '../../network/Api';
 import { API_MOVIES_GENRES, API_MOVIE_DETAIL, API_MOVIE_RECOMMENDATIONS, API_MOVIE_SIMILAR, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_MOVIES_ATR_VALUE, VAR_MOVIE_ID } from '../../network/NetworkData';
 import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorImageBorder, colorPrimary } from '../../utils/colors';
@@ -73,6 +73,12 @@ const MovieDetail = ({ route, navigation }) => {
         });
     }
 
+    const onSeeAllCreditsClick = () => {
+        navigation.push(MOVIE_CREDITS, {
+            movieId: movieId
+        });
+    }
+
     if (isLoading || movieDetail === null) {
         return (
             <View style={[globalStyles.container, styles.container]}>
@@ -98,7 +104,8 @@ const MovieDetail = ({ route, navigation }) => {
                         onCollectionClick={onCollectionClick} />
                     <CastListComponent
                         casts={movieDetail.credits.cast}
-                        onPersonClick={onPersonClick} />
+                        onPersonClick={onPersonClick}
+                        onSeeAllCreditsClick={onSeeAllCreditsClick} />
                     <VideosComponent videos={movieDetail.videos.results} />
                     <InformationComponent movieDetail={movieDetail} />
                     <Divider />
@@ -294,13 +301,13 @@ const InformationComponent = ({ movieDetail }) => {
     );
 }
 
-const CastListComponent = ({ casts, onPersonClick }) => {
+const CastListComponent = ({ casts, onPersonClick, onSeeAllCreditsClick }) => {
     if (casts.length > 0) {
         return (
             <View>
                 <SectionHeader
                     title='Cast & Crew'
-                    showAll={() => { }} />
+                    showAll={() => { onSeeAllCreditsClick() }} />
                 <FlatList
                     style={{ flexGrow: 0, marginTop: 4 }}
                     showsHorizontalScrollIndicator={false}

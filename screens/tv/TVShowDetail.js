@@ -8,7 +8,7 @@ import RoundedImage from '../../components/RoundedImage';
 import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import VideoTileItem from '../../components/VideoTileItem';
-import { PERSON_DETAIL, TV_SEASON_DETAIL, TV_SHOW_DETAIL, TV_SHOW_LIST } from '../../navigators/NavigatorNames';
+import { PERSON_DETAIL, TV_SEASON_DETAIL, TV_SHOW_CREDITS, TV_SHOW_DETAIL, TV_SHOW_LIST } from '../../navigators/NavigatorNames';
 import { createUrl, GET_ALL } from '../../network/Api';
 import { API_TV_DETAIL, API_TV_GENRES, API_TV_RECOMMENDATIONS, API_TV_SIMILAR, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_TV_ATR_VALUE, VAR_TV_ID } from '../../network/NetworkData';
 import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorImageBorder, colorPrimary } from '../../utils/colors';
@@ -74,6 +74,12 @@ const TVShowDetail = ({ route, navigation }) => {
         });
     }
 
+    const onSeeAllCreditsClick = () => {
+        navigation.push(TV_SHOW_CREDITS, {
+            tvId: tvId
+        });
+    }
+
     if (isLoading || tvShowDetail === null) {
         return (
             <View style={[globalStyles.container, styles.container]}>
@@ -99,7 +105,8 @@ const TVShowDetail = ({ route, navigation }) => {
                         onSeasonDetailClick={onSeasonDetailClick} />
                     <CastListComponent
                         casts={tvShowDetail.credits.cast}
-                        onPersonClick={onPersonClick} />
+                        onPersonClick={onPersonClick}
+                        onSeeAllCreditsClick={onSeeAllCreditsClick} />
                     <VideosComponent videos={tvShowDetail.videos.results} />
                     <InformationComponent tvShowDetail={tvShowDetail} />
                     <Divider />
@@ -184,7 +191,7 @@ const SeasonsComponent = ({ seasons, onSeasonDetailClick }) => {
                 <View>
                     <SectionHeader
                         title='Seasons'
-                        showAll={() => { }} />
+                        hideShowAll={true} />
                     <FlatList
                         style={{ flexGrow: 0, marginTop: 4 }}
                         showsHorizontalScrollIndicator={false}
@@ -301,13 +308,13 @@ const InformationComponent = ({ tvShowDetail }) => {
     );
 }
 
-const CastListComponent = ({ casts, onPersonClick }) => {
+const CastListComponent = ({ casts, onPersonClick, onSeeAllCreditsClick }) => {
     if (casts.length > 0) {
         return (
             <View>
                 <SectionHeader
                     title='Cast & Crew'
-                    showAll={() => { }} />
+                    showAll={() => { onSeeAllCreditsClick() }} />
                 <FlatList
                     style={{ flexGrow: 0, marginTop: 4 }}
                     showsHorizontalScrollIndicator={false}
