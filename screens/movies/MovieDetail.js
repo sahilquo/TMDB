@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView, Text, FlatList, TouchableWithoutFeedback, Linking } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, FlatList, TouchableWithoutFeedback, Linking, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import LinearGradient from 'react-native-linear-gradient';
 import { ActivityIndicator } from 'react-native-paper';
@@ -9,7 +9,7 @@ import RoundedImage from '../../components/RoundedImage';
 import SectionHeader from '../../components/SectionHeader';
 import VerticalItem from '../../components/VerticalItem';
 import VideoTileItem from '../../components/VideoTileItem';
-import { MOVIE_COLLECTION_DETAIL, MOVIE_CREDITS, MOVIE_DETAIL, MOVIE_LIST, PERSON_DETAIL } from '../../navigators/NavigatorNames';
+import { GENRE_LIST, MOVIE_COLLECTION_DETAIL, MOVIE_CREDITS, MOVIE_DETAIL, MOVIE_LIST, PERSON_DETAIL } from '../../navigators/NavigatorNames';
 import { createUrl, GET_ALL } from '../../network/Api';
 import { API_MOVIES_GENRES, API_MOVIE_DETAIL, API_MOVIE_RECOMMENDATIONS, API_MOVIE_SIMILAR, IMAGE_BASE_URL, PARAM_APPEND_TO_RESPONSE, PARAM_LANGUAGE, PARAM_LANGUAGE_VALUE, PARAM_MOVIES_ATR_VALUE, VAR_MOVIE_ID } from '../../network/NetworkData';
 import { colorAccent, colorAccentDark, colorGrey, colorGreyDark, colorImageBorder, colorPrimary } from '../../utils/colors';
@@ -79,6 +79,13 @@ const MovieDetail = ({ route, navigation }) => {
         });
     }
 
+    const onGenreClick = (genre) => {
+        navigation.push(GENRE_LIST, {
+            genreId: genre.id,
+            genreName: genre.name
+        });
+    }
+
     if (isLoading || movieDetail === null) {
         return (
             <View style={[globalStyles.container, styles.container]}>
@@ -96,7 +103,7 @@ const MovieDetail = ({ route, navigation }) => {
                         position: 'absolute', width: '100%',
                         height: 210
                     }} />
-                    <BasicDetailComponent movieDetail={movieDetail} />
+                    <BasicDetailComponent movieDetail={movieDetail} onGenreClick={onGenreClick} />
                     <Divider />
                     <CollectionComponent
                         collection={movieDetail['belongs_to_collection']}
@@ -131,7 +138,7 @@ const updateParams = (navigation, movieDetail) => {
     }
 }
 
-const BasicDetailComponent = ({ movieDetail }) => {
+const BasicDetailComponent = ({ movieDetail, onGenreClick }) => {
     return (
         <View style={styles.basicDetails}>
             <FastImage
@@ -172,7 +179,9 @@ const BasicDetailComponent = ({ movieDetail }) => {
                     keyExtractor={({ id }) => id}
                     renderItem={({ item }) => {
                         return (
-                            <Text style={styles.genreText}>{item.name}</Text>
+                            <TouchableOpacity onPress={() => onGenreClick(item)}>
+                                <Text style={styles.genreText}>{item.name}</Text>
+                            </TouchableOpacity>
                         )
                     }}
                 />

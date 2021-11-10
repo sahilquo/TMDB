@@ -22,5 +22,7 @@ export const TV_SHOW_CREDITS = "Tv Show Credits";
 export const PERSON_LIST = "Person List";
 export const PERSON_CREDITS = "Person Credits";
 
+export const GENRE_LIST = "Genre List";
+
 export const ALL_SCREENS = "All Screens";
 export const TAB_STACK = "Tab Stack";

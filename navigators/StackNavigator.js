@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import GenreList from '../screens/common/GenreList';
 import CelebritiesHome from '../screens/home/CelebritiesHome';
 import MoviesHome from '../screens/home/MoviesHome';
 import TVShowsHome from '../screens/home/TVShowsHome';
@@ -15,7 +16,7 @@ import TvShowCredits from '../screens/tv/TvShowCredits';
 import TVShowDetail from '../screens/tv/TVShowDetail';
 import TVShowList from '../screens/tv/TVShowList';
 import { colorPrimaryDark } from '../utils/colors';
-import { ALL_SCREENS, CELEBRITIES_HOME, MOVIES_HOME, MOVIE_COLLECTION_DETAIL, MOVIE_CREDITS, MOVIE_DETAIL, MOVIE_LIST, PERSON_CREDITS, PERSON_DETAIL, PERSON_LIST, TAB_STACK, TV_SEASON_DETAIL, TV_SHOWS_HOME, TV_SHOW_CREDITS, TV_SHOW_DETAIL, TV_SHOW_LIST } from './NavigatorNames';
+import { ALL_SCREENS, CELEBRITIES_HOME, GENRE_LIST, MOVIES_HOME, MOVIE_COLLECTION_DETAIL, MOVIE_CREDITS, MOVIE_DETAIL, MOVIE_LIST, PERSON_CREDITS, PERSON_DETAIL, PERSON_LIST, TAB_STACK, TV_SEASON_DETAIL, TV_SHOWS_HOME, TV_SHOW_CREDITS, TV_SHOW_DETAIL, TV_SHOW_LIST } from './NavigatorNames';
 import TabNavigator from './TabNavigator';
 
 const Stack = createNativeStackNavigator();
@@ -115,6 +116,12 @@ const AllStack = () => {
                 component={TvShowCredits}
                 options={{
                     title: 'Credits'
+                }} />
+            <Stack.Screen
+                name={GENRE_LIST}
+                component={GenreList}
+                options={{
+                    title: ''
                 }} />
         </Stack.Navigator>
     );

@@ -22,6 +22,8 @@ export const API_MOVIE_CREDITS = '/movie/{movie_id}/credits'
 
 export const API_MOVIE_COLLECTION_DETAIL = '/collection/{collection_id}'
 
+export const API_DISCOVER_MOVIES = '/discover/movie'
+
 // TV
 export const API_TV_AIRING_TODAY = '/tv/airing_today'
 export const API_TV_TOP_RATED = '/tv/top_rated'
@@ -37,6 +39,8 @@ export const API_TV_CREDITS = '/tv/{tv_id}/credits'
 
 export const API_TV_SEASON_DETAIL = '/tv/{tv_id}/season/{season_number}'
 
+export const API_DISCOVER_TV = '/discover/tv'
+
 // Celebrities
 export const API_PERSON_POPULAR = '/person/popular'
 export const API_PERSON_TRENDING = '/trending/person/day'
@@ -44,17 +48,21 @@ export const API_PERSON_DETAIL = '/person/{person_id}'
 export const API_PERSON_MOVIES = '/person/{person_id}/movie_credits'
 export const API_PERSON_TV_SHOWS = '/person/{person_id}/tv_credits'
 
+// Variable Names
 export const VAR_MOVIE_ID = '{movie_id}'
 export const VAR_TV_ID = '{tv_id}'
 export const VAR_PERSON_ID = '{person_id}'
 export const VAR_COLLECTION_ID = '{collection_id}'
 export const VAR_SEASON_NUMBER = '{season_number}'
 
+// Param Names
 export const PARAM_LANGUAGE = 'language'
 export const PARAM_REGION = 'region'
 export const PARAM_APPEND_TO_RESPONSE = 'append_to_response'
 export const PARAM_PAGE = 'page'
+export const PARAM_WITH_GENRES = 'with_genres'
 
+// Param Values
 export const PARAM_LANGUAGE_VALUE = 'en-IN'
 export const PARAM_REGION_VALUE = 'IN'
 export const PARAM_MOVIES_ATR_VALUE = 'credits,videos,recommendations,similar'
